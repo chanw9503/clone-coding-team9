@@ -6,7 +6,10 @@
  *
  */
 
-import React from 'react';
+import React, { useRef } from 'react';
+import { QueryClient, useMutation, useQuery } from 'react-query';
+import { __login } from '../../api/login';
+import useInput from '../../hooks/useInput';
 import {
   StyledWrap,
   StyledContainer,
@@ -20,15 +23,63 @@ import {
 } from './styles';
 
 function Login() {
+  const [userEmail, setUserEmail] = useInput();
+  const [password, setPassword] = useInput();
+
+  const isError = useRef(false);
+
+  const queryClient = new QueryClient();
+
+  const mutation = useMutation(__login, {
+    onSuccess: () => {
+      isError.current = false;
+      queryClient.invalidateQueries('login');
+    },
+    onError: (e) => {
+      isError.current = true;
+      console.log(e);
+      queryClient.invalidateQueries('login');
+    },
+  });
+
+  console.log('isError.curren', isError.current);
+
+  const handlerSubmit = (e) => {
+    e.preventDefault();
+
+    mutation.mutate({ id: '12', userEmail, password });
+  };
+
   return (
     <StyledWrap>
       <StyledContainer>
-        <StyledForm>
+        <StyledForm onSubmit={handlerSubmit}>
           <StyledInputBox>
-            <StyledIdInput placeholder="이메일" type="email" />
+            {isError.current ? (
+              <StyledIdInput
+                value={userEmail}
+                onChange={setUserEmail}
+                placeholder="이메일"
+                type="email"
+                isError={true}
+              />
+            ) : (
+              <StyledIdInput
+                value={userEmail}
+                onChange={setUserEmail}
+                placeholder="이메일"
+                type="email"
+                isError={true}
+              />
+            )}
           </StyledInputBox>
           <StyledInputBox>
-            <StyledPwInput />
+            <StyledPwInput
+              value={password}
+              onChange={setPassword}
+              placeholder="비밀번호"
+              type="password"
+            />
           </StyledInputBox>
           <StyledButton>로그인</StyledButton>
           <StyledSelection>
