@@ -6,6 +6,7 @@
  */
 
 import styled, { css } from 'styled-components';
+import { darken, lighten } from 'polished';
 
 const StyledWrap = styled.div`
   display: flex;
@@ -46,14 +47,13 @@ const StyledIdInput = styled.input`
   font-family: 'Noto Sans KR', 'Noto Sans CJK KR', '맑은 고딕', 'Malgun Gothic',
     sans-serif;
   padding: 13px 15px 14px;
-  z-index: 1;
+  box-sizing: border-box;
+  border-color: ${(props) => (props.borderColor ? '#f77' : 'lightgray')};
 
-  ${({ isError }) => {
-    isError &&
-      css`
-        border-color: #f77;
-      `;
-  }}
+  opacity: 1;
+  &:hover {
+    opacity: 0.7;
+  }
 `;
 
 const StyledPwInput = styled.input`
@@ -70,8 +70,15 @@ const StyledPwInput = styled.input`
   font-family: 'Noto Sans KR', 'Noto Sans CJK KR', '맑은 고딕', 'Malgun Gothic',
     sans-serif;
   transition: box-shadow 0.2s ease 0s, background-color 0.2s ease 0s;
-  z-index: 1;
+  box-sizing: border-box;
   resize: none;
+
+  border-color: ${(props) => (props.borderColor ? '#f77' : 'lightgray')};
+
+  opacity: 1;
+  &:hover {
+    opacity: 0.7;
+  }
 `;
 
 const StyledInputBox = styled.div`
@@ -104,6 +111,10 @@ const StyledButton = styled.button`
   border-radius: 4px;
 
   color: white;
+
+  &:hover {
+    background-color: #1292b8;
+  }
 `;
 
 const StyledSelection = styled.section`

@@ -7,8 +7,13 @@
  */
 
 import React, { useRef } from 'react';
-import { QueryClient, useMutation, useQuery } from 'react-query';
+import { QueryClient, useMutation } from 'react-query';
+import styled from 'styled-components';
 import { __login } from '../../api/login';
+import FackBookLogo from '../../components/FackBookLogo/FackBookLogo';
+import HomeLogo from '../../components/HomeLogo';
+import KakaoLogo from '../../components/KakaoLogo/KakaoLogo';
+import NaverLogo from '../../components/NaverLogo/NaverLogo';
 import useInput from '../../hooks/useInput';
 import {
   StyledWrap,
@@ -35,70 +40,100 @@ function Login() {
       isError.current = false;
       queryClient.invalidateQueries('login');
     },
-    onError: (e) => {
+    onError: () => {
+      console.log('test');
       isError.current = true;
-      console.log(e);
       queryClient.invalidateQueries('login');
+    },
+    onSettled: (e) => {
+      if (e.response?.status === 500) {
+        isError.current = true;
+      }
     },
   });
 
-  console.log('isError.curren', isError.current);
-
   const handlerSubmit = (e) => {
     e.preventDefault();
-
-    mutation.mutate({ id: '12', userEmail, password });
+    console.log('test');
+    mutation.mutate({ id: password + 1212, userEmail, password });
   };
 
   return (
     <StyledWrap>
       <StyledContainer>
+        <HomeLogo />
         <StyledForm onSubmit={handlerSubmit}>
-          <StyledInputBox>
-            {isError.current ? (
-              <StyledIdInput
-                value={userEmail}
-                onChange={setUserEmail}
-                placeholder="이메일"
-                type="email"
-                isError={true}
-              />
-            ) : (
-              <StyledIdInput
-                value={userEmail}
-                onChange={setUserEmail}
-                placeholder="이메일"
-                type="email"
-                isError={true}
-              />
-            )}
-          </StyledInputBox>
-          <StyledInputBox>
-            <StyledPwInput
-              value={password}
-              onChange={setPassword}
-              placeholder="비밀번호"
-              type="password"
-            />
-          </StyledInputBox>
+          {isError.current ? (
+            <>
+              <StyledInputBox>
+                <StyledIdInput
+                  value={userEmail}
+                  onChange={setUserEmail}
+                  placeholder="이메일"
+                  type="email"
+                  borderColor=" #f77"
+                />
+              </StyledInputBox>
+              <StyledInputBox>
+                <StyledPwInput
+                  value={password}
+                  onChange={setPassword}
+                  placeholder="비밀번호"
+                  type="password"
+                  borderColor=" #f77"
+                />
+              </StyledInputBox>
+            </>
+          ) : (
+            <>
+              <StyledInputBox>
+                <StyledIdInput
+                  value={userEmail}
+                  onChange={setUserEmail}
+                  placeholder="이메일"
+                  type="email"
+                />
+              </StyledInputBox>
+              <StyledInputBox>
+                <StyledPwInput
+                  value={password}
+                  onChange={setPassword}
+                  placeholder="비밀번호"
+                  type="password"
+                />
+              </StyledInputBox>
+            </>
+          )}
           <StyledButton>로그인</StyledButton>
           <StyledSelection>
             <span style={{ fontSize: '15px', color: '#424242' }}>비밀번호 재설정</span>
             <span style={{ fontSize: '15px', color: '#424242' }}>회원가입</span>
           </StyledSelection>
-
-          <section>
-            <StyledTextDiv>SNS계정으로 간편 로그인/회원가입</StyledTextDiv>
-            <div>sadas</div>
-            <div>sadas</div>
-            <div>sadas</div>
-          </section>
-
-          <div style={{ marginTop: '24px' }}>asdasdasdasdasdas</div>
         </StyledForm>
+
+        <section>
+          <StyledTextDiv>SNS계정으로 간편 로그인/회원가입</StyledTextDiv>
+          <FackBookLogo />
+          <KakaoLogo />
+          <NaverLogo />
+        </section>
+
+        <StyledTagA style={{ marginTop: '24px' }}>
+          로그인에 문제가 있으신가요?{' '}
+        </StyledTagA>
       </StyledContainer>
     </StyledWrap>
   );
 }
 
 export default Login;
+
+const StyledTagA = styled.a`
+  margin-top: 24px;
+  color: #c2c8cc;
+  font-size: 14px;
+  line-height: 18px;
+
+  cursor: pointer;
+  touch-action: manipulation;
+`;
