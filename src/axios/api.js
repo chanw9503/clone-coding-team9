@@ -1,11 +1,15 @@
+/**
+ *
+ * 작성자 : 박찬우
+ * 목적 : axios instance 화
+ * 작성날짜 : 2023.03.24
+ *
+ */
+
 import axios from 'axios';
 
 const instance = axios.create({
   baseURL: process.env.REACT_APP_SERVER_URL,
-
-  headers: {
-    Authorization: '',
-  },
 });
 
 instance.interceptors.request.use(
@@ -25,3 +29,5 @@ instance.interceptors.response.use(
     return error;
   }
 );
+
+export default instance;
