@@ -1,3 +1,10 @@
+/**
+ *
+ * 작성자 : 박찬우
+ * 목적 : naver logo 스크럽
+ * 날짜 : 2023.03.25
+ *
+ */
 import React from 'react';
 import styled from 'styled-components';
 

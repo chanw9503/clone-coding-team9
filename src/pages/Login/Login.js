@@ -71,7 +71,8 @@ function Login() {
                   onChange={setUserEmail}
                   placeholder="이메일"
                   type="email"
-                  borderColor=" #f77"
+                  borderColor="#f77"
+                  boxShadow="rgba(253, 170, 170, 0.3)"
                 />
               </StyledInputBox>
               <StyledInputBox>
@@ -81,6 +82,7 @@ function Login() {
                   placeholder="비밀번호"
                   type="password"
                   borderColor=" #f77"
+                  boxShadow="rgba(253, 170, 170, 0.3)"
                 />
               </StyledInputBox>
             </>
@@ -92,6 +94,7 @@ function Login() {
                   onChange={setUserEmail}
                   placeholder="이메일"
                   type="email"
+                  boxShadow="rgba(171, 201, 225, 0.3)"
                 />
               </StyledInputBox>
               <StyledInputBox>
@@ -100,6 +103,7 @@ function Login() {
                   onChange={setPassword}
                   placeholder="비밀번호"
                   type="password"
+                  boxShadow="rgba(171, 201, 225, 0.3)"
                 />
               </StyledInputBox>
             </>

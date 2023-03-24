@@ -1,3 +1,11 @@
+/**
+ *
+ * 작성자 : 박찬우
+ * 목적 : HomeLogo 스크럽
+ * 날짜 : 2023.03.25
+ *
+ */
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -15,7 +23,7 @@ function HomeLogo() {
         height="50"
         viewBox="0 0 147 50"
         preserveAspectRatio="xMidYMid meet"
-        class="css-1ekfro2 ebon26m3"
+        className="css-1ekfro2 ebon26m3"
       >
         <g fill="none" fillRule="evenodd">
           <path

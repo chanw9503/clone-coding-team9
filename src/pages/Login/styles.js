@@ -49,10 +49,17 @@ const StyledIdInput = styled.input`
   padding: 13px 15px 14px;
   box-sizing: border-box;
   border-color: ${(props) => (props.borderColor ? '#f77' : 'lightgray')};
-
+  outline: none;
   opacity: 1;
   &:hover {
     opacity: 0.7;
+  }
+
+  &:focus {
+    box-shadow: ${(props) =>
+        !props.borderColor ? 'rgba(171, 201, 225, 0.3)' : 'rgba(253, 170, 170, 0.3)'}
+      0px 0px 0px 3px;
+    z-index: 10;
   }
 `;
 
@@ -72,12 +79,19 @@ const StyledPwInput = styled.input`
   transition: box-shadow 0.2s ease 0s, background-color 0.2s ease 0s;
   box-sizing: border-box;
   resize: none;
+  outline: none;
 
   border-color: ${(props) => (props.borderColor ? '#f77' : 'lightgray')};
 
   opacity: 1;
   &:hover {
     opacity: 0.7;
+  }
+
+  &:focus {
+    box-shadow: ${(props) =>
+        !props.borderColor ? 'rgba(171, 201, 225, 0.3)' : 'rgba(253, 170, 170, 0.3)'}
+      0px 0px 0px 3px;
   }
 `;
 
