@@ -5,7 +5,7 @@
  * 수정날짜 : 2023.03.24
  */
 
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const StyledWrap = styled.div`
   display: flex;
@@ -47,6 +47,13 @@ const StyledIdInput = styled.input`
     sans-serif;
   padding: 13px 15px 14px;
   z-index: 1;
+
+  ${({ isError }) => {
+    isError &&
+      css`
+        border-color: #f77;
+      `;
+  }}
 `;
 
 const StyledPwInput = styled.input`
