@@ -10,9 +10,7 @@ import { QueryClientProvider } from 'react-query';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-    <QueryClientProvider>
-      <App />
-    </QueryClientProvider>
+    <App />
   </Provider>
 );
 
