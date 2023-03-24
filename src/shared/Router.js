@@ -11,17 +11,11 @@ function Router() {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />}/>
         </Routes>
       </BrowserRouter>
     </div>
   );
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/signup" element={<SignUp />}/>
-      </Routes>
-    </BrowserRouter>
-  )
 }
 
 export default Router;
