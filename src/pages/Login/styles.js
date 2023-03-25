@@ -6,7 +6,7 @@
  */
 
 import styled, { css } from 'styled-components';
-import { darken, lighten } from 'polished';
+import { COLOR } from '../../utils/color';
 
 const StyledWrap = styled.div`
   display: flex;
@@ -40,7 +40,6 @@ const StyledIdInput = styled.input`
   width: 100%;
   border-radius: 4px 4px 0px 0px;
   border: 1px solid lightgray;
-  transition: box-shadow 0.2s ease 0s, background-color 0.2s ease 0s;
   line-height: 21px;
   font-size: 15px;
   color: black;
@@ -48,17 +47,16 @@ const StyledIdInput = styled.input`
     sans-serif;
   padding: 13px 15px 14px;
   box-sizing: border-box;
-  border-color: ${(props) => (props.borderColor ? '#f77' : 'lightgray')};
+  border-color: ${(props) => (props.borderColor ? COLOR.boardRed : 'lightgray')};
   outline: none;
-  opacity: 1;
+
   &:hover {
-    opacity: 0.7;
+    background-color: rgba(0, 0, 0, 0.01);
   }
 
   &:focus {
-    box-shadow: ${(props) =>
-        !props.borderColor ? 'rgba(171, 201, 225, 0.3)' : 'rgba(253, 170, 170, 0.3)'}
-      0px 0px 0px 3px;
+    box-shadow: ${(props) => (!props.borderColor ? COLOR.hoverBlue : COLOR.hoverRed)} 0px
+      0px 0px 3px;
     z-index: 10;
   }
 `;
@@ -81,17 +79,15 @@ const StyledPwInput = styled.input`
   resize: none;
   outline: none;
 
-  border-color: ${(props) => (props.borderColor ? '#f77' : 'lightgray')};
+  border-color: ${(props) => (props.borderColor ? COLOR.boardRed : 'lightgray')};
 
-  opacity: 1;
   &:hover {
-    opacity: 0.7;
+    background-color: rgba(0, 0, 0, 0.01);
   }
 
   &:focus {
-    box-shadow: ${(props) =>
-        !props.borderColor ? 'rgba(171, 201, 225, 0.3)' : 'rgba(253, 170, 170, 0.3)'}
-      0px 0px 0px 3px;
+    box-shadow: ${(props) => (!props.borderColor ? COLOR.hoverBlue : COLOR.hoverRed)} 0px
+      0px 0px 3px;
   }
 `;
 
@@ -113,7 +109,7 @@ const StyledButton = styled.button`
   cursor: pointer;
   border: 1px solid transparent;
 
-  background-color: #35c5f0;
+  background-color: ${COLOR.buttonBlue};
   padding: 15px 10px;
   line-height: 20px;
   font-size: 17px;
@@ -127,7 +123,7 @@ const StyledButton = styled.button`
   color: white;
 
   &:hover {
-    background-color: #1292b8;
+    background-color: ${COLOR.hoverDeepBlue};
   }
 `;
 
@@ -149,6 +145,16 @@ const StyledTextDiv = styled.div`
   text-align: center;
 `;
 
+const StyledTagA = styled.a`
+  margin-top: 24px;
+  color: #c2c8cc;
+  font-size: 14px;
+  line-height: 18px;
+
+  cursor: pointer;
+  touch-action: manipulation;
+`;
+
 export {
   StyledWrap,
   StyledContainer,
@@ -159,4 +165,5 @@ export {
   StyledButton,
   StyledSelection,
   StyledTextDiv,
+  StyledTagA,
 };
