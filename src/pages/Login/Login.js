@@ -25,6 +25,7 @@ import {
   StyledButton,
   StyledSelection,
   StyledTextDiv,
+  StyledTagA,
 } from './styles';
 
 function Login() {
@@ -52,7 +53,7 @@ function Login() {
     },
   });
 
-  const handlerSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     console.log('test');
     mutation.mutate({ id: password + 1212, userEmail, password });
@@ -62,7 +63,7 @@ function Login() {
     <StyledWrap>
       <StyledContainer>
         <HomeLogo />
-        <StyledForm onSubmit={handlerSubmit}>
+        <StyledForm onSubmit={handleSubmit}>
           {isError.current ? (
             <>
               <StyledInputBox>
@@ -131,13 +132,3 @@ function Login() {
 }
 
 export default Login;
-
-const StyledTagA = styled.a`
-  margin-top: 24px;
-  color: #c2c8cc;
-  font-size: 14px;
-  line-height: 18px;
-
-  cursor: pointer;
-  touch-action: manipulation;
-`;
