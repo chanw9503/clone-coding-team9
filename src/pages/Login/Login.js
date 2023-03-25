@@ -53,7 +53,7 @@ function Login() {
     },
   });
 
-  const handleSubmit = (e) => {
+  const submitHandler = (e) => {
     e.preventDefault();
     console.log('test');
     mutation.mutate({ id: password + 1212, userEmail, password });
@@ -63,7 +63,7 @@ function Login() {
     <StyledWrap>
       <StyledContainer>
         <HomeLogo />
-        <StyledForm onSubmit={handleSubmit}>
+        <StyledForm onSubmit={submitHandler}>
           {isError.current ? (
             <>
               <StyledInputBox>

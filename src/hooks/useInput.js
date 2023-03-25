@@ -15,11 +15,11 @@ function useInput() {
     setValue(e.target.value);
   };
 
-  const handleChange = (item) => {
+  const changeHandler = (item) => {
     setValue(item);
   };
 
-  return [value, handler, handleChange];
+  return [value, handler, changeHandler];
 }
 
 export default useInput;
