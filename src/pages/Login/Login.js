@@ -49,7 +49,12 @@ function Login() {
     onSettled: (e) => {
       if (e.response?.status === 500) {
         isError.current = true;
+      } else if (e.name === 'AxiosError') {
+        alert('서버와 연결을 확인해 주세요');
+        isError.current = true;
       }
+
+      console.log('e', e.name);
     },
   });
 
@@ -59,6 +64,7 @@ function Login() {
     mutation.mutate({ id: password + 1212, userEmail, password });
   };
 
+  console.log('isError.current', isError.current);
   return (
     <StyledWrap>
       <StyledContainer>
