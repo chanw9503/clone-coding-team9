@@ -1,3 +1,11 @@
+/**
+ *
+ * 작성자 : 박찬우
+ * 목적 : input에 대한 custom hook 제작
+ * 작성 날짜 : 2023.03.25
+ *
+ */
+
 import React, { useState } from 'react';
 
 function useInput() {
@@ -7,11 +15,11 @@ function useInput() {
     setValue(e.target.value);
   };
 
-  const changeHandler = (item) => {
+  const handleChange = (item) => {
     setValue(item);
   };
 
-  return [value, handler, changeHandler];
+  return [value, handler, handleChange];
 }
 
 export default useInput;
