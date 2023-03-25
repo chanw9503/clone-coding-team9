@@ -7,12 +7,11 @@ function FormInput(props) {
       <StTilte fontsize={props.fontsize} htmlFor={props.id}>
         {props.label}
       </StTilte>
-      <StLabel>{props.label}</StLabel>
+      <StLabel>{props.labelcomment}</StLabel>
       <StInput
         required
         size={props.size}
         type={props.type}
-        id={props.id}
         value={props.value}
         onChange={props.onChange}
         placeholder={props.placeholder}

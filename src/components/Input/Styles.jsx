@@ -2,18 +2,23 @@ import styled, { css } from "styled-components";
 
 const sizes = {
     large: {height: '145px', padding : "8px 15px 9px"},
-    medium: {height: '40px', padding : "8px 15px 9px"},
-    small: {height: '40px', padding: "0 15px"},
+    medium: {height: '21px', padding : "8px 15px 9px"},
+    small: {wideheight: '21px', padding: "0 15px"},
   };
 
 const StInput = styled.input`
     width: 100%;
-    height : 40px;
+    border: 1px solid #dbdbdb;
     border-radius: 4px;
+    line-height: 21px;
+    :focus {
+        border-color: rgb(136, 214, 250);
+    }
 
     ${({ size }) => size && css`
     width: ${sizes[size].width};
     height: ${sizes[size].height};
+    padding: ${sizes[size].padding};
     `}
 `
 
@@ -29,7 +34,7 @@ const StTilte = styled.div`
     font-size: 16px;
     line-height: 20px;
     font-weight: 700;
-    color: #2F3438;
+    color: #080808;
     letter-spacing: -0.3px; 
 `
 const StLabel = styled.div`
