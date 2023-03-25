@@ -5,7 +5,6 @@ const __login = async (paylaod) => {
   console.log('__login');
   console.log(paylaod);
   const response = await api.post('/login', paylaod);
-  console.log('response', response);
   return response;
 };
 
