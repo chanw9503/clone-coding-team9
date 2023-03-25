@@ -5,14 +5,14 @@
 */
 
 import React from 'react';
-// import { emailCheck, nickNameCheck, pwCheck, reconfirmPw } from '../../utils/regExp';
 import FormInput from '../../components/Input/FormInput'
 import { StContainer, StForm, StSns, StTitle } from './Styles';
 import { useMutation, useQueryClient } from 'react-query';
-import { addSign } from '../../api/Signup';
+import { addSign } from '../../api/SignUp';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCallback } from 'react';
+
 
 function SignUp() {
     const navigate = useNavigate();
@@ -37,13 +37,13 @@ function SignUp() {
     const queryClient = useQueryClient();
     const mutation =useMutation(addSign, {
         onSuccess : () => {
-            queryClient.invalidateQueries("Signup")
+            queryClient.invalidateQueries("signup")
         }
     });
 
     const newUser = {
-        id: 2,
-        userEmail: email +"@" + selected,
+        id: 7,
+        userEmail: email +"@"+ selected,
         nickname: nickName,
         password: password,
         confirm: passwordConfirm,
@@ -135,7 +135,7 @@ function SignUp() {
                 <select value={selected} onChange={(e)=> {
                     setSelected(e.target.value)
                 }}>
-                    <option value disabled>선택해주세요</option>
+                    <option value='disabled'>선택해주세요</option>
                     <option value="naver.com">naver.com</option>
                     <option value="hanmail.net">hanmail.net</option>
                     <option value="daum.net">daum.net</option>
