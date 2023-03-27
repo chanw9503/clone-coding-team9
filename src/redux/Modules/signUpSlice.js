@@ -5,6 +5,7 @@ const initialState = {
     nickName : "",
     password : "",
     confirm : "",
+    userEmail: "",
 };
 
 export const signUpSlice = createSlice({
