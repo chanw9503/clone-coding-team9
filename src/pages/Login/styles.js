@@ -6,7 +6,7 @@
  */
 
 import styled, { css } from 'styled-components';
-import { COLOR } from '../../utils/color';
+import { COLOR } from '../../shared/color';
 
 const StyledWrap = styled.div`
   display: flex;
