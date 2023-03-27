@@ -7,7 +7,7 @@
  */
 
 import React, { useRef } from 'react';
-import { QueryClient, useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import styled from 'styled-components';
 import { __login } from '../../api/login';
 import FackBookLogo from '../../components/FackBookLogo/FackBookLogo';
@@ -29,17 +29,22 @@ import {
 } from './styles';
 
 function Login() {
-  const [userEmail, setUserEmail] = useInput();
-  const [password, setPassword] = useInput();
+  // const [userEmail, setUserEmail] = useInput();
+  // const [password, setPassword] = useInput();
+
+  //useState --> useRef로 변환 렌더링 최적화
+  const userEailRef = useRef();
+  const passwordRef = useRef();
 
   const isError = useRef(false);
 
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
 
   const mutation = useMutation(__login, {
-    onSuccess: () => {
+    onSuccess: (e) => {
       isError.current = false;
       queryClient.invalidateQueries('login');
+      console.log('event', e);
     },
     onError: () => {
       console.log('test');
@@ -47,7 +52,7 @@ function Login() {
       queryClient.invalidateQueries('login');
     },
     onSettled: (e) => {
-      if (e.response?.status === 500) {
+      if (e.response?.status === 500 || e.response?.status === 400) {
         isError.current = true;
       } else if (e.name === 'AxiosError') {
         alert('서버와 연결을 확인해 주세요');
@@ -60,11 +65,14 @@ function Login() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log('test');
-    mutation.mutate({ id: password + 1212, userEmail, password });
+
+    mutation.mutate({
+      id: passwordRef.current.value + 1212,
+      userEmail: userEailRef.current.value,
+      password: passwordRef.current.value,
+    });
   };
 
-  console.log('isError.current', isError.current);
   return (
     <StyledWrap>
       <StyledContainer>
@@ -74,8 +82,7 @@ function Login() {
             <>
               <StyledInputBox>
                 <StyledIdInput
-                  value={userEmail}
-                  onChange={setUserEmail}
+                  ref={userEailRef}
                   placeholder="이메일"
                   type="email"
                   borderColor="#f77"
@@ -84,8 +91,7 @@ function Login() {
               </StyledInputBox>
               <StyledInputBox>
                 <StyledPwInput
-                  value={password}
-                  onChange={setPassword}
+                  ref={passwordRef}
                   placeholder="비밀번호"
                   type="password"
                   borderColor=" #f77"
@@ -97,8 +103,7 @@ function Login() {
             <>
               <StyledInputBox>
                 <StyledIdInput
-                  value={userEmail}
-                  onChange={setUserEmail}
+                  ref={userEailRef}
                   placeholder="이메일"
                   type="email"
                   boxShadow="rgba(171, 201, 225, 0.3)"
@@ -106,8 +111,7 @@ function Login() {
               </StyledInputBox>
               <StyledInputBox>
                 <StyledPwInput
-                  value={password}
-                  onChange={setPassword}
+                  ref={passwordRef}
                   placeholder="비밀번호"
                   type="password"
                   boxShadow="rgba(171, 201, 225, 0.3)"
