@@ -2,6 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import LogoType from '../LogoType/LogoType';
 import Navigation from '../Navigation';
+import { TfiAngleDown } from 'react-icons/tfi';
+
 import {
   StyledHeader,
   StyledContainer,
@@ -29,7 +31,18 @@ function Header() {
               <StyledLoginBlock onClick={() => navigate('/signup')}>
                 회원가입
               </StyledLoginBlock>
-              <StyledWritingButton>글쓰기</StyledWritingButton>
+              <StyledWritingButton>
+                <span
+                  style={{ fontSize: '12px', lineHeight: 18, verticalAlign: 'middle' }}
+                >
+                  글쓰기
+                </span>
+                <span
+                  style={{ fontSize: '15px', lineHeight: 1, verticalAlign: 'middle' }}
+                >
+                  <TfiAngleDown />
+                </span>
+              </StyledWritingButton>
             </StyledFlexBlock>
           </StyledItemBlock>
         </StyledBoardBlock>

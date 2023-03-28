@@ -17,26 +17,54 @@ const StyledHeader = styled.header`
 
 const StyledContainer = styled.div`
   height: 81px;
-`;
-
-const StyledBoardBlock = styled.div`
-  position: fixed;
-  z-index: 1102;
-  top: 0px;
-  width: 100%;
-  background-color: ${COLOR.white};
   display: flex;
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid ${COLOR.borderGray};
 `;
 
-const StyledItemBlock = styled.div`
-  height: 60px;
-  max-width: 1024px;
-  padding: 10px 60px;
+const StyledBoardBlock = styled.div`
+  position: fixed;
+  z-index: 1102;
+  top: 0px;
+  max-width: 1136px;
+  width: 100%;
+  background-color: ${COLOR.white};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  width: 1024px;
+  @media screen and (min-width: 768px) {
+    margin: 0 auto;
+    width: calc(100% - 80px);
+    max-width: 100%;
+    box-sizing: border-box;
+    min-height: 1;
+  }
+
+  @media screen and (min-width: 1024px) {
+    margin: 0 auto;
+    width: calc(100% - 120px);
+    max-width: 100%;
+    box-sizing: border-box;
+    min-height: 1;
+  }
+
+  @media screen and (min-width: 1256px) {
+    margin: 0 auto;
+    width: calc(100% - 120px);
+    max-width: 100%;
+    width: 1136px;
+    box-sizing: border-box;
+    min-height: 1;
+  }
+`;
+
+const StyledItemBlock = styled.div`
+  height: 80px;
+  padding-right: 35px;
+
+  width: 100%;
   display: flex;
 
   justify-content: space-between;
@@ -64,17 +92,17 @@ const StyledWritingButton = styled.button`
   border: none;
   background: none;
   font: inherit;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 18px;
 
-  display: inline-block;
+  display: flex;
   justify-content: center;
   align-items: center;
-
+  gap: 5px;
   width: auto;
   border-radius: 4px;
   height: 40px;
-  padding: 0 16px;
+  padding: 0 20px;
   text-align: center;
   color: ${COLOR.white};
   outline: none;
@@ -82,7 +110,7 @@ const StyledWritingButton = styled.button`
   background-color: ${COLOR.buttonBlue};
 
   &:hover {
-    background-color: ${COLOR.hoverBlue};
+    background-color: ${COLOR.hoverDeepBlue};
   }
 `;
 
