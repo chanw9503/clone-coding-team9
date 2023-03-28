@@ -7,12 +7,17 @@
 import React from 'react';
 import FormInput from '../../components/Input/FormInput';
 import { useMutation, useQueryClient } from 'react-query';
+import { addSign, confirmEmail } from '../../api/auth';
 import { useNavigate } from 'react-router-dom';
 import { useCallback, useState } from 'react';
 import FackBookLogo from '../../components/FackBookLogo/FackBookLogo';
 import KakaoLogo from '../../components/KakaoLogo/KakaoLogo';
 import NaverLogo from '../../components/NaverLogo/NaverLogo';
 import Logo from './Logo';
+import { Link } from 'react-router-dom';
+import useEmailComfirm from '../../hooks/useEmailComfirm';
+import useSignUp from '../../hooks/useSignUp';
+import Select from '../../components/Select/Select';
 import {
   StContainer,
   StForm,
@@ -31,20 +36,6 @@ import {
   StLogoForm,
   StLoginNavi,
 } from './Styles';
-import { addSign, confirmEmail } from '../../api/auth';
-  StContainer,StForm,StSns,StTitle,StEmailForm,
-  StInputFrom,StSnsInner,StErrorMessage,StWrap,StContents,
-  StEmailWrap,StButton,StButtonForm,StLogoForm, StLoginNavi,} from "./Styles";
-import { useNavigate } from "react-router-dom";
-import { useCallback, useState } from "react";
-import FackBookLogo from "../../components/FackBookLogo/FackBookLogo";
-import KakaoLogo from "../../components/KakaoLogo/KakaoLogo";
-import NaverLogo from "../../components/NaverLogo/NaverLogo";
-import Logo from "./Logo";
-import { Link } from "react-router-dom";
-import useEmailComfirm from "../../hooks/useEmailComfirm";
-import useSignUp from "../../hooks/useSignUp";
-import Select from "../../components/Select/Select";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -71,10 +62,16 @@ function SignUp() {
   const mutation = useSignUp();
   const confirmSendEmail = useEmailComfirm();
 
-  const emailOption = ['naver.com', 'hanmail.net', 'daum.net',
-  'gamail.com','nate.com','hotmail.com','outlook.com','icloud.com'];
-  
- 
+  const emailOption = [
+    'naver.com',
+    'hanmail.net',
+    'daum.net',
+    'gamail.com',
+    'nate.com',
+    'hotmail.com',
+    'outlook.com',
+    'icloud.com',
+  ];
 
   //회원가입 보내기
   const newUser = {
@@ -87,14 +84,14 @@ function SignUp() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    mutation.mutate(newUser)
-    navigate("/");
+    mutation.mutate(newUser);
+    navigate('/');
   };
 
   //이메일인증보내기
   const userEmail = {
     id: 7,
-    userEmail: email + "@" + selected,
+    userEmail: email + '@' + selected,
   };
 
   const sendEmail = (e) => {
@@ -191,14 +188,14 @@ function SignUp() {
                 value={email}
                 onChange={onChangeEmail}
               />
-              <span style={{ color: "#424242" }}>&nbsp;@&nbsp;</span>
-              <Select 
+              <span style={{ color: '#424242' }}>&nbsp;@&nbsp;</span>
+              <Select
                 name="size"
                 defaultValue="선택해주세요"
                 options={emailOption}
                 value={selected}
                 onChange={onSelectHandler}
-                />
+              />
             </StEmailForm>
           </StEmailWrap>
           {email.length > 0 && (
@@ -212,7 +209,7 @@ function SignUp() {
               bc="rgb(247, 248, 250)"
               bdc="rgb(218, 220, 224)"
               hc="rgb(218, 220, 224)"
-              mb ="30px"
+              mb="30px"
               type="submit"
               onClick={sendEmail}
             >
@@ -272,7 +269,9 @@ function SignUp() {
           </StButtonForm>
           <StLoginNavi>
             이미 아이디가 있으신가요? &nbsp;
-            <Link to={"/login"} style={{fontWeight :"bold"}}>로그인</Link> 
+            <Link to={'/login'} style={{ fontWeight: 'bold' }}>
+              로그인
+            </Link>
           </StLoginNavi>
         </StForm>
       </StContainer>
