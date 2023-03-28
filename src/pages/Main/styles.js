@@ -7,20 +7,41 @@ const StyledWrap = styled.div`
 
 const StyledContainer = styled.div`
   margin: 0 auto;
-  max-width: 1024px;
+  max-width: 1136px;
+
+  width: calc(100% - 120px);
   height: 100vh;
-  background-color: green;
-  padding: 10px 60px;
+
+  @media screen and (min-width: 768px) {
+    margin: 0 auto;
+    width: calc(100% - 80px);
+    max-width: 100%;
+    box-sizing: border-box;
+    min-height: 1;
+  }
+
+  @media screen and (min-width: 1024px) {
+    margin: 0 auto;
+    width: calc(100% - 120px);
+    max-width: 100%;
+    box-sizing: border-box;
+    min-height: 1;
+  }
+
+  @media screen and (min-width: 1256px) {
+    margin: 0 auto;
+    width: calc(100% - 120px);
+    max-width: 100%;
+    width: 1136px;
+    box-sizing: border-box;
+    min-height: 1;
+  }
 `;
 
 const StyledSortListBox = styled.div`
   padding: 10px 0;
-  background-color: tomato;
-  max-width: 1024px;
-  margin: 0 auto;
-  height: 40px;
-
   display: flex;
+
   gap: 5px;
 `;
 
