@@ -7,17 +7,19 @@
 import React from "react";
 import FormInput from "../../components/Input/FormInput";
 import {
-  StContainer,StForm,StSns,StTitle,StEmailForm,SelectFrom,
+  StContainer,StForm,StSns,StTitle,StEmailForm,
   StInputFrom,StSnsInner,StErrorMessage,StWrap,StContents,
   StEmailWrap,StButton,StButtonForm,StLogoForm, StLoginNavi,} from "./Styles";
-import { useMutation, useQueryClient } from "react-query";
-import { addSign, confirmEmail } from "../../api/SignUp";
 import { useNavigate } from "react-router-dom";
 import { useCallback, useState } from "react";
 import FackBookLogo from "../../components/FackBookLogo/FackBookLogo";
 import KakaoLogo from "../../components/KakaoLogo/KakaoLogo";
 import NaverLogo from "../../components/NaverLogo/NaverLogo";
 import Logo from "./Logo";
+import { Link } from "react-router-dom";
+import useEmailComfirm from "../../hooks/useEmailComfirm";
+import useSignUp from "../../hooks/useSignUp";
+import Select from "../../components/Select/Select";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -38,23 +40,16 @@ function SignUp() {
   const [isEmail, setIsEmail] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
+  
+  const mutation = useSignUp();
+  const confirmSendEmail = useEmailComfirm();
 
-  const queryClient = useQueryClient();
-  const mutation = useMutation(addSign, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("signup");
-    },
-  });
-
-  const confirmSendEmail = useMutation(confirmEmail, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("signup");
-    },
-  });
-
+  const emailOption = ['naver.com', 'hanmail.net', 'daum.net',
+  'gamail.com','nate.com','hotmail.com','outlook.com','icloud.com'];
+  
   //회원가입 보내기
   const newUser = {
-    id: 8,
+    id: 2,
     userEmail: email + "@" + selected,
     nickname: nickName,
     password: password,
@@ -63,15 +58,16 @@ function SignUp() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    mutation.mutate(newUser);
+    mutation.mutate(newUser)
     navigate("/");
   };
 
   //이메일인증보내기
   const userEmail = {
-    id: 2,
+    id: 7,
     userEmail: email + "@" + selected,
   };
+
   const sendEmail = (e) => {
     e.preventDefault();
     confirmSendEmail.mutate(userEmail);
@@ -141,6 +137,10 @@ function SignUp() {
     }
   }, []);
 
+  const onSelectHandler = (newValue) => {
+    setSelected(newValue);
+  };
+
   return (
     <StWrap>
         <Logo/>
@@ -165,22 +165,13 @@ function SignUp() {
                 onChange={onChangeEmail}
               />
               <span style={{ color: "#424242" }}>&nbsp;@&nbsp;</span>
-              <SelectFrom
+              <Select 
+                name="size"
+                defaultValue="선택해주세요"
+                options={emailOption}
                 value={selected}
-                onChange={(e) => {
-                  setSelected(e.target.value);
-                }}
-              >
-                <option value="disabled">선택해주세요</option>
-                <option value="naver.com">naver.com</option>
-                <option value="hanmail.net">hanmail.net</option>
-                <option value="daum.net">daum.net</option>
-                <option value="gamail.com">gamail.com</option>
-                <option value="nate.com">nate.com</option>
-                <option value="hotmail.com">hotmail.com</option>
-                <option value="outlook.com">outlook.com</option>
-                <option value="icloud.com">icloud.com</option>
-              </SelectFrom>
+                onChange={onSelectHandler}
+                />
             </StEmailForm>
           </StEmailWrap>
           {email.length > 0 && (
@@ -195,6 +186,7 @@ function SignUp() {
               color="rgb(194, 200, 204)"
               bc="rgb(247, 248, 250)"
               bdc="rgb(218, 220, 224)"
+              hc="rgb(218, 220, 224)"
               mb ="30px"
               type="submit"
               onClick={sendEmail}
@@ -250,14 +242,15 @@ function SignUp() {
               bc="#35c5f0"
               type="submit"
               onClick={onSubmit}
+              hc="rgb(9, 173, 219)"
             >
               회원가입하기
             </StButton>
           </StButtonForm>
           <StLoginNavi>
-            이미 아이디가 있으신가요?<div>로그인</div>
+            이미 아이디가 있으신가요? &nbsp;
+            <Link to={"/login"} style={{fontWeight :"bold"}}>로그인</Link> 
           </StLoginNavi>
-         
         </StForm>
       </StContainer>
     </StWrap>
