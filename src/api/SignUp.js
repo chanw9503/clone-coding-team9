@@ -7,4 +7,7 @@ const addSign = async(newUser) => {
 const confirmEmail = async(userEmail) => {
     await api.post('/validate', userEmail)
 }
-export {addSign, confirmEmail};
+const postBoard = async()=> {
+    await api.post('/posts')
+}
+export {addSign, confirmEmail, postBoard};
