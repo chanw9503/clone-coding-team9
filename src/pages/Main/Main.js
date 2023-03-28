@@ -7,11 +7,23 @@ import { useGetDropBox } from '../../hooks/useGetDropBox';
 import styled from 'styled-components';
 import useGetMainBoard from '../../hooks/useGetMainBoard';
 import Card from '../../components/Card';
+import useDropBox from '../../hooks/useDropBox';
 
 function Main() {
-  const drop = ['추천순', '인기순', '기타순', '몰라순'];
-  const [currentDrop, setCurrentDrop] = useState('');
-  const dropList = [drop, drop, drop];
+  const SORT_LIST = [
+    { id: nanoid(), name: '추천순' },
+    { id: nanoid(), name: '인기순' },
+    { id: nanoid(), name: '기타순' },
+    { id: nanoid(), name: '몰라순' },
+  ];
+
+  const HOME_LIST = [
+    { id: nanoid(), name: '아마트' },
+    { id: nanoid(), name: '빌라/연립' },
+  ];
+
+  const dropboxProps1 = useDropBox({ title: '정렬', list: SORT_LIST });
+  const dropboxProps2 = useDropBox({ title: '주거형태', list: HOME_LIST });
 
   const { data, isLoading } = useGetMainBoard();
 
@@ -21,17 +33,8 @@ function Main() {
       <StyledWrap>
         <StyledContainer>
           <StyledSortListBox>
-            {dropList.map((item, index) => {
-              const id = nanoid();
-              return (
-                <DropBox
-                  key={id}
-                  id={index}
-                  onDropList={item}
-                  onCurrentDrop={setCurrentDrop}
-                />
-              );
-            })}
+            <DropBox {...dropboxProps1} />
+            <DropBox {...dropboxProps2} />
           </StyledSortListBox>
           <StyledBody>
             {data?.map((item) => {
