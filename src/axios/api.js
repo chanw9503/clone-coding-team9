@@ -24,7 +24,6 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   function (config) {
-    console.log('config', config);
     return config;
   },
   function (error) {

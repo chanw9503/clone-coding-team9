@@ -28,7 +28,7 @@ function Card({ data }) {
   const [isLike, setLike] = useState(false);
   const [bookMark, setBookMark] = useState(false);
   const mutation = usePutLike();
-  console.log(data);
+
   return (
     <StyledCardBlock>
       <StyledArticle>
