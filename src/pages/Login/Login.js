@@ -8,13 +8,12 @@
 
 import React, { useRef } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
-import styled from 'styled-components';
-import { __login } from '../../api/login';
+import { __login } from '../../api/auth';
 import FackBookLogo from '../../components/FackBookLogo/FackBookLogo';
 import HomeLogo from '../../components/HomeLogo';
 import KakaoLogo from '../../components/KakaoLogo/KakaoLogo';
 import NaverLogo from '../../components/NaverLogo/NaverLogo';
-import useInput from '../../hooks/useInput';
+
 import {
   StyledWrap,
   StyledContainer,
