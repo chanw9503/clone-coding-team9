@@ -12,6 +12,7 @@ const StInput = styled.input`
     transition: border-color 0.2s ease 0s, box-shadow 0.2s ease 0s, background-color 0.2s ease 0s;
     display: block;
     box-sizing: border-box;
+    font-weight: 700;
     height: 40px;
     padding: 0px 15px;
     line-height: 40px;
