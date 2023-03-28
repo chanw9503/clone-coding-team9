@@ -4,34 +4,48 @@
  * 작성 목적 : 회원가입구현
  */
 
-import React from "react";
-import FormInput from "../../components/Input/FormInput";
+import React from 'react';
+import FormInput from '../../components/Input/FormInput';
+import { useMutation, useQueryClient } from 'react-query';
+import { useNavigate } from 'react-router-dom';
+import { useCallback, useState } from 'react';
+import FackBookLogo from '../../components/FackBookLogo/FackBookLogo';
+import KakaoLogo from '../../components/KakaoLogo/KakaoLogo';
+import NaverLogo from '../../components/NaverLogo/NaverLogo';
+import Logo from './Logo';
 import {
-  StContainer,StForm,StSns,StTitle,StEmailForm,SelectFrom,
-  StInputFrom,StSnsInner,StErrorMessage,StWrap,StContents,
-  StEmailWrap,StButton,StButtonForm,StLogoForm, StLoginNavi,} from "./Styles";
-import { useMutation, useQueryClient } from "react-query";
-import { addSign, confirmEmail } from "../../api/SignUp";
-import { useNavigate } from "react-router-dom";
-import { useCallback, useState } from "react";
-import FackBookLogo from "../../components/FackBookLogo/FackBookLogo";
-import KakaoLogo from "../../components/KakaoLogo/KakaoLogo";
-import NaverLogo from "../../components/NaverLogo/NaverLogo";
-import Logo from "./Logo";
+  StContainer,
+  StForm,
+  StSns,
+  StTitle,
+  StEmailForm,
+  SelectFrom,
+  StInputFrom,
+  StSnsInner,
+  StErrorMessage,
+  StWrap,
+  StContents,
+  StEmailWrap,
+  StButton,
+  StButtonForm,
+  StLogoForm,
+  StLoginNavi,
+} from './Styles';
+import { addSign, confirmEmail } from '../../api/auth';
 
 function SignUp() {
   const navigate = useNavigate();
-  const [nickName, setNickName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [selected, setSelected] = useState("");
+  const [nickName, setNickName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [selected, setSelected] = useState('');
 
   //오류메시지 상태저장
-  const [NickNameMessage, setNickNameMessage] = useState("");
-  const [emailMessage, setEmailMessage] = useState("");
-  const [passwordMessage, setPasswordMessage] = useState("");
-  const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
+  const [NickNameMessage, setNickNameMessage] = useState('');
+  const [emailMessage, setEmailMessage] = useState('');
+  const [passwordMessage, setPasswordMessage] = useState('');
+  const [passwordConfirmMessage, setPasswordConfirmMessage] = useState('');
 
   // 유효성 검사
   const [isNickName, setIsNickName] = useState(false);
@@ -42,20 +56,20 @@ function SignUp() {
   const queryClient = useQueryClient();
   const mutation = useMutation(addSign, {
     onSuccess: () => {
-      queryClient.invalidateQueries("signup");
+      queryClient.invalidateQueries('signup');
     },
   });
 
   const confirmSendEmail = useMutation(confirmEmail, {
     onSuccess: () => {
-      queryClient.invalidateQueries("signup");
+      queryClient.invalidateQueries('signup');
     },
   });
 
   //회원가입 보내기
   const newUser = {
     id: 8,
-    userEmail: email + "@" + selected,
+    userEmail: email + '@' + selected,
     nickname: nickName,
     password: password,
     confirm: passwordConfirm,
@@ -64,13 +78,13 @@ function SignUp() {
   const onSubmit = (e) => {
     e.preventDefault();
     mutation.mutate(newUser);
-    navigate("/");
+    navigate('/');
   };
 
   //이메일인증보내기
   const userEmail = {
     id: 2,
-    userEmail: email + "@" + selected,
+    userEmail: email + '@' + selected,
   };
   const sendEmail = (e) => {
     e.preventDefault();
@@ -85,10 +99,10 @@ function SignUp() {
     setEmail(emailCurrent);
 
     if (!emailRegex.test(emailCurrent)) {
-      setEmailMessage("이메일 형식이 올바르지 않습니다.");
+      setEmailMessage('이메일 형식이 올바르지 않습니다.');
       setIsEmail(false);
     } else {
-      setEmailMessage("");
+      setEmailMessage('');
       setIsEmail(true);
     }
   }, []);
@@ -100,12 +114,10 @@ function SignUp() {
     setPassword(passwordCurrent);
 
     if (!passwordRegex.test(passwordCurrent)) {
-      setPasswordMessage(
-        "비밀번호는 영문, 숫자를 포함하여 8자 이상이어야 합니다"
-      );
+      setPasswordMessage('비밀번호는 영문, 숫자를 포함하여 8자 이상이어야 합니다');
       setIsPassword(false);
     } else {
-      setPasswordMessage("");
+      setPasswordMessage('');
       setIsPassword(true);
     }
   }, []);
@@ -117,10 +129,10 @@ function SignUp() {
       setPasswordConfirm(passwordConfirmCurrent);
 
       if (password === passwordConfirmCurrent) {
-        setPasswordConfirmMessage("");
+        setPasswordConfirmMessage('');
         setIsPasswordConfirm(true);
       } else {
-        setPasswordConfirmMessage("비밀번호가 일치하지 않습니다.");
+        setPasswordConfirmMessage('비밀번호가 일치하지 않습니다.');
         setIsPasswordConfirm(false);
       }
     },
@@ -129,21 +141,21 @@ function SignUp() {
 
   // 이름(유효성)
   const onChangeNickName = useCallback((e) => {
-    const nickNameRegex =/^[a-zA-Z가-힣0-9]{2,30}$/;
+    const nickNameRegex = /^[a-zA-Z가-힣0-9]{2,30}$/;
     const nickNameCurrent = e.target.value;
     setNickName(nickNameCurrent);
     if (!nickNameRegex.test(nickNameCurrent)) {
-      setNickNameMessage("2글자 이상 입력해주세요.");
+      setNickNameMessage('2글자 이상 입력해주세요.');
       setIsNickName(false);
     } else {
-      setNickNameMessage("올바른 이름 형식입니다 :)");
+      setNickNameMessage('올바른 이름 형식입니다 :)');
       setIsNickName(true);
     }
   }, []);
 
   return (
     <StWrap>
-        <Logo/>
+      <Logo />
       <StContainer>
         <StForm>
           <StTitle>회원가입</StTitle>
@@ -164,7 +176,7 @@ function SignUp() {
                 value={email}
                 onChange={onChangeEmail}
               />
-              <span style={{ color: "#424242" }}>&nbsp;@&nbsp;</span>
+              <span style={{ color: '#424242' }}>&nbsp;@&nbsp;</span>
               <SelectFrom
                 value={selected}
                 onChange={(e) => {
@@ -184,9 +196,7 @@ function SignUp() {
             </StEmailForm>
           </StEmailWrap>
           {email.length > 0 && (
-            <StErrorMessage
-              className={`message ${isEmail ? "success" : "error"}`}
-            >
+            <StErrorMessage className={`message ${isEmail ? 'success' : 'error'}`}>
               {emailMessage}
             </StErrorMessage>
           )}
@@ -195,7 +205,7 @@ function SignUp() {
               color="rgb(194, 200, 204)"
               bc="rgb(247, 248, 250)"
               bdc="rgb(218, 220, 224)"
-              mb ="30px"
+              mb="30px"
               type="submit"
               onClick={sendEmail}
             >
@@ -212,9 +222,7 @@ function SignUp() {
             onChange={onChangePassword}
           />
           {password.length > 0 && (
-            <StErrorMessage
-              className={`message ${isPassword ? "success" : "error"}`}
-            >
+            <StErrorMessage className={`message ${isPassword ? 'success' : 'error'}`}>
               {passwordMessage}
             </StErrorMessage>
           )}
@@ -227,7 +235,7 @@ function SignUp() {
             onChange={onChangePasswordConfirm}
           />
           <StErrorMessage
-            className={`message ${isPasswordConfirm ? "success" : "error"}`}
+            className={`message ${isPasswordConfirm ? 'success' : 'error'}`}
           >
             {passwordConfirmMessage}
           </StErrorMessage>
@@ -240,24 +248,18 @@ function SignUp() {
             onChange={onChangeNickName}
           />
           {nickName.length > 0 && (
-            <span className={`message ${isNickName ? "success" : "error"}`}>
+            <span className={`message ${isNickName ? 'success' : 'error'}`}>
               {NickNameMessage}
             </span>
           )}
           <StButtonForm>
-            <StButton
-              color="#fff"
-              bc="#35c5f0"
-              type="submit"
-              onClick={onSubmit}
-            >
+            <StButton color="#fff" bc="#35c5f0" type="submit" onClick={onSubmit}>
               회원가입하기
             </StButton>
           </StButtonForm>
           <StLoginNavi>
             이미 아이디가 있으신가요?<div>로그인</div>
           </StLoginNavi>
-         
         </StForm>
       </StContainer>
     </StWrap>
