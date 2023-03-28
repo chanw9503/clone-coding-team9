@@ -1,19 +1,48 @@
 import styled, { css } from 'styled-components';
 import { COLOR } from '../../shared/color';
-const StyledNavBlock = styled.div`
+
+const StyledWrap = styled.div`
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   border-bottom: 1px solid ${COLOR.borderGray};
 `;
 
-const StyledNavItemBlock = styled.div`
-  height: 60px;
-  max-width: 1024px;
-  padding: 0px 60px;
+const StyledNavBlock = styled.div`
+  width: 100%;
+  max-width: 1136px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  width: 1024px;
+  @media screen and (min-width: 768px) {
+    margin: 0 auto;
+    width: calc(100% - 80px);
+    max-width: 100%;
+    box-sizing: border-box;
+    min-height: 1;
+  }
+
+  @media screen and (min-width: 1024px) {
+    margin: 0 auto;
+    width: calc(100% - 120px);
+    max-width: 100%;
+    box-sizing: border-box;
+    min-height: 1;
+  }
+
+  @media screen and (min-width: 1256px) {
+    margin: 0 auto;
+    width: calc(100% - 120px);
+    max-width: 100%;
+    width: 1136px;
+    box-sizing: border-box;
+    min-height: 1;
+  }
+`;
+
+const StyledNavItemBlock = styled.div`
+  height: 50px;
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 20px;
@@ -50,4 +79,4 @@ const StyledItemBox = styled.div`
       : ''};
 `;
 
-export { StyledNavBlock, StyledNavItemBlock, StyledNavItem, StyledItemBox };
+export { StyledWrap, StyledNavBlock, StyledNavItemBlock, StyledNavItem, StyledItemBox };

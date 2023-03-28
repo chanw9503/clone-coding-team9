@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+  StyledWrap,
   StyledNavBlock,
   StyledNavItemBlock,
   StyledNavItem,
@@ -10,12 +11,26 @@ function Navigation() {
 
   const [count, setCount] = useState(-9999);
   return (
-    <StyledNavBlock>
-      <StyledNavItemBlock>
-        {menuList.map((item, index) => {
-          if (+index === +count) {
-            return (
-              <StyledItemBox borderColor={true}>
+    <StyledWrap>
+      <StyledNavBlock>
+        <StyledNavItemBlock>
+          {menuList.map((item, index) => {
+            if (+index === +count) {
+              return (
+                <StyledItemBox borderColor={true}>
+                  <StyledNavItem
+                    onClick={(e) => {
+                      setCount(e.target.id);
+                    }}
+                    key={index}
+                    id={index}
+                  >
+                    {item}
+                  </StyledNavItem>
+                </StyledItemBox>
+              );
+            } else {
+              return (
                 <StyledNavItem
                   onClick={(e) => {
                     setCount(e.target.id);
@@ -25,24 +40,12 @@ function Navigation() {
                 >
                   {item}
                 </StyledNavItem>
-              </StyledItemBox>
-            );
-          } else {
-            return (
-              <StyledNavItem
-                onClick={(e) => {
-                  setCount(e.target.id);
-                }}
-                key={index}
-                id={index}
-              >
-                {item}
-              </StyledNavItem>
-            );
-          }
-        })}
-      </StyledNavItemBlock>
-    </StyledNavBlock>
+              );
+            }
+          })}
+        </StyledNavItemBlock>
+      </StyledNavBlock>
+    </StyledWrap>
   );
 }
 
