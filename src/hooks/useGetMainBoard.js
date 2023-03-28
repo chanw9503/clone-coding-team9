@@ -6,7 +6,7 @@ import api from '../axios/api';
 const useGetMainBoard = () => {
   const queryClient = useQueryClient();
 
-  const { isLoading, data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: keys.GET_MAIN_BOARD,
     queryFn: async () => {
       const data = await api.get('/main');
