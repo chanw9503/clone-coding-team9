@@ -7,6 +7,7 @@
  */
 
 import axios from 'axios';
+import { getCookie } from '../auth/Cookie';
 
 export const instance = axios.create({
   baseURL: process.env.REACT_APP_SERVER,
