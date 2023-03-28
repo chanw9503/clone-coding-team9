@@ -30,9 +30,8 @@ export const StContents = styled.div`
 `
 export const StSns = styled.div`
     margin: 30px 0;
-
     border-bottom: 1px solid #ededed;
-    padding: 0;
+    padding-bottom: 30px;
 `
 export const StForm = styled.form`
     width: 360px;
@@ -52,23 +51,10 @@ export const StEmailForm = styled.div`
     text-align: center;
     align-items : center;
 `
-export const SelectFrom = styled.select`
-    font-size: 15px;
-    width: 100%;
-    transition: border-color .2s,box-shadow .2s,background-color .2s;
-    display: block;
-    box-sizing: border-box;
-    height: 40px;
-    padding: 0 15px;
-    line-height: 40px;
-    border-radius: 4px;
-    border: 1px solid #dbdbdb;
-    background-color: #fff;
-    color: #424242;
-`
 
 export const StInputFrom = styled.input`
     font-size: 15px;
+    font-weight: 700;
     width: 100%;
     transition: border-color .2s,box-shadow .2s,background-color .2s;
     box-sizing: border-box;
@@ -114,6 +100,9 @@ export const StButton = styled.button`
   margin-top: ${({mt})=>mt};
   margin-bottom: ${({mb})=> mb};
   padding: ${({pd})=>pd};
+  &:hover {
+        background-color: ${({hc})=>hc};
+    }
 `;
 
 export const StErrorMessage =styled.span`
