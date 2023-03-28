@@ -1,9 +1,15 @@
+import { nanoid } from 'nanoid';
 import React, { useRef } from 'react';
 import { BiChevronDown } from 'react-icons/bi';
 import useDetectClose from '../../hooks/useDetectClose';
-import { StyledSortButton, StyledDropBox, StyledUl, StyledLi } from './styles';
-import { nanoid } from 'nanoid';
 import usePostDropBox from '../../hooks/usePostDropBox';
+import {
+  StyledDropContainer,
+  StyledSortButton,
+  StyledDropBox,
+  StyledUl,
+  StyledLi,
+} from './styles';
 
 function DropBox(props) {
   const [myPageIsOpen, myPageRef, myPageHandler] = useDetectClose(false);
@@ -40,7 +46,7 @@ function DropBox(props) {
       if (myPageIsOpen === true && currentStayRef.current === false) {
         myPageHandler();
       }
-    }, 500);
+    }, 100);
   };
 
   const liClickHandler = () => {
@@ -48,13 +54,12 @@ function DropBox(props) {
       id: props.id,
       value: 'ddfadsa',
     });
-    console.log('li click');
   };
 
   const liList = ['추천순', '인기순', '기타순', '몰라순'];
 
   return (
-    <div>
+    <StyledDropContainer>
       <StyledSortButton
         onClick={myPageHandler}
         ref={myPageRef}
@@ -80,7 +85,7 @@ function DropBox(props) {
           })}
         </StyledUl>
       </StyledDropBox>
-    </div>
+    </StyledDropContainer>
   );
 }
 

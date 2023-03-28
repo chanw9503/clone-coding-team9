@@ -1,6 +1,10 @@
 import styled, { css } from 'styled-components';
 import { COLOR } from '../../shared/color';
 
+const StyledDropContainer = styled.div`
+  padding: 10px 0;
+`;
+
 const StyledSortButton = styled.button`
   border: none;
   color: ${COLOR.darkGray};
@@ -23,7 +27,7 @@ const StyledDropBox = styled.div`
   height: 0;
 
   transform: translate(-50%, -20px);
-  transition: opacity 0.3s ease, transform 0.4s ease, visibility 0.1s;
+  // transition: opacity 0.3s ease, transform 0.4s ease, visibility 0.1s;
   z-index: 9;
 
   // 선택한 요소 끝부분에 내용을 추가하는 가상 요소
@@ -81,4 +85,4 @@ const StyledLi = styled.li`
   }
 `;
 
-export { StyledSortButton, StyledDropBox, StyledUl, StyledLi };
+export { StyledDropContainer, StyledSortButton, StyledDropBox, StyledUl, StyledLi };
