@@ -1,91 +1,63 @@
-import { nanoid } from 'nanoid';
-import React, { useRef } from 'react';
-import { BiChevronDown } from 'react-icons/bi';
-import useDetectClose from '../../hooks/useDetectClose';
-import usePostDropBox from '../../hooks/usePostDropBox';
-import {
-  StyledDropContainer,
-  StyledSortButton,
-  StyledDropBox,
-  StyledUl,
-  StyledLi,
-} from './styles';
+import React, { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { StyledLi, StyledSortButton, StyledUl, Title } from './styles';
 
 function DropBox(props) {
-  const [myPageIsOpen, myPageRef, myPageHandler] = useDetectClose(false);
-  const currentStayRef = useRef(false);
+  const { title, list, isShow, close, open } = props;
 
-  const mutation = usePostDropBox();
+  const ref = useRef(null);
+  const dropdownRef = useRef(null);
+  const [btnPosition, setBtnPosition] = useState({ top: 0, left: 0, height: 0 });
 
-  //마우스가 버튼을 떠나고 0.5초 뒤에 열려 있는지 확인 후 닫는다.
-  const mouseLeaveHander = () => {
-    currentStayRef.current = false;
-    setTimeout(() => {
-      if (myPageIsOpen === true && currentStayRef.current === false) {
-        myPageHandler();
-      }
-    }, 100);
-  };
+  useEffect(() => {
+    const { current } = ref;
+    const { top, left, height } = current.getBoundingClientRect();
+    setBtnPosition({ top, left, height });
+  }, [ref]);
 
-  const mouseEnterHandler = () => {
-    currentStayRef.current = true;
-    if (myPageIsOpen === false) {
-      myPageHandler();
+  const mouseOverHandler = (e) => {
+    if (
+      e.target === dropdownRef.current || //현재 이벤트가 UL의 이면 ul박스를 닫지 하지 않는다.
+      e.target.parentNode === dropdownRef.current || //부모 노드가 UL이면 ul박스를 닫지 하지 않는다.
+      e.target === ref.current || //현재 이벤트가 발생한 곳이 버튼이면 ul박스를 닫지 하지 않는다.
+      e.target.parentNode === ref.current //부모 노드가 버튼이면 ul박스를 닫지 하지 않는다.
+    ) {
+      return;
     }
+
+    close();
+    window.removeEventListener('mouseover', mouseOverHandler);
   };
 
-  const mouseliEnterHandler = () => {
-    currentStayRef.current = true;
-    props.onCurrentDrop(props.id);
-  };
-
-  //dropBox 안에 마우스가 있는지 확인하고 없으면 dropBox를 닫는다.
-  const mouseliLeaveHandler = () => {
-    currentStayRef.current = false;
-    setTimeout(() => {
-      if (myPageIsOpen === true && currentStayRef.current === false) {
-        myPageHandler();
+  const hoverHandler = () => {
+    open();
+    Array.from(document.body.children).forEach((node) => {
+      if (node.tagName === 'UL' && node !== dropdownRef.current) {
+        node.style.display = 'none';
       }
-    }, 100);
-  };
-
-  const liClickHandler = () => {
-    mutation.mutate({
-      id: props.id,
-      value: 'ddfadsa',
     });
-  };
 
-  const liList = ['추천순', '인기순', '기타순', '몰라순'];
+    window.addEventListener('mouseover', mouseOverHandler);
+  };
 
   return (
-    <StyledDropContainer>
-      <StyledSortButton
-        onClick={myPageHandler}
-        ref={myPageRef}
-        onMouseEnter={mouseEnterHandler}
-        onMouseLeave={mouseLeaveHander}
-      >
-        정렬 <BiChevronDown />
-      </StyledSortButton>
-      <StyledDropBox isDropped={myPageIsOpen}>
-        <StyledUl>
-          {liList?.map((item) => {
-            const id = nanoid();
-            return (
-              <StyledLi
-                key={id}
-                onClick={liClickHandler}
-                onMouseEnter={mouseliEnterHandler}
-                onMouseLeave={mouseliLeaveHandler}
-              >
-                {item}
-              </StyledLi>
-            );
-          })}
-        </StyledUl>
-      </StyledDropBox>
-    </StyledDropContainer>
+    <>
+      <Title onMouseEnter={hoverHandler} ref={ref}>
+        <StyledSortButton onClick={close}>{title}</StyledSortButton>
+      </Title>
+      {isShow && (
+        <>
+          {createPortal(
+            <StyledUl ref={dropdownRef} pos={btnPosition}>
+              {list.map((item) => (
+                <StyledLi key={item.id}>{item.name}</StyledLi>
+              ))}
+            </StyledUl>,
+            document.body
+          )}
+        </>
+      )}
+    </>
   );
 }
 

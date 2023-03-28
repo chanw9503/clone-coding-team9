@@ -14,3 +14,5 @@ export function useGetDropBox() {
 
   return { data, isLoading };
 }
+
+export default useGetDropBox;
