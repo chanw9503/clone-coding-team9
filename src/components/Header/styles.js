@@ -20,12 +20,21 @@ const StyledContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const StyledFixBlock = styled.div`
+  height: 81px;
+  display: flex;
+  z-index: 1102;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  position: fixed;
+  background-color: ${COLOR.white};
   border-bottom: 1px solid ${COLOR.borderGray};
 `;
 
 const StyledBoardBlock = styled.div`
-  position: fixed;
-  z-index: 1102;
   top: 0px;
   max-width: 1136px;
   width: 100%;
@@ -117,6 +126,7 @@ const StyledWritingButton = styled.button`
 export {
   StyledHeader,
   StyledContainer,
+  StyledFixBlock,
   StyledBoardBlock,
   StyledItemBlock,
   StyledFlexBlock,
