@@ -48,4 +48,5 @@ export default HomeLogo;
 
 const StyledTagA = styled.a`
   margin-bottom: 30px;
+  cursor: pointer;
 `;
