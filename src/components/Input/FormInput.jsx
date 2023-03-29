@@ -1,10 +1,10 @@
-import React from "react";
-import { StInput, StContainer, StTilte, StLabel} from "./Styles";
+import React from 'react';
+import { StInput, StContainer, StTilte, StLabel, StyledErrorBlock } from './Styles';
 
 function FormInput(props) {
   return (
     <StContainer>
-      <StTilte fontsize={props.fontsize} htmlFor={props.id}>
+      <StTilte fontsize={props.fontsize} htmlFor={props.id} isError={props.isError}>
         {props.label}
       </StTilte>
       <StLabel>{props.labelcomment}</StLabel>
@@ -15,9 +15,10 @@ function FormInput(props) {
         value={props.value}
         onChange={props.onChange}
         placeholder={props.placeholder}
-        ref={props.ref}
+        ref={props.reference}
+        isError={props.isError}
       />
-      {props.isError ? <div>{props.error}</div> : null}
+      {props.isError ? null : <StyledErrorBlock>{props.error}</StyledErrorBlock>}
     </StContainer>
   );
 }

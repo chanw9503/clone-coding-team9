@@ -1,20 +1,17 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
 function Logo() {
   const navigate = useNavigate();
   return (
-    <StLogo onClick={() => {
-      navigate('/');
-    }}>
-      <svg
-        width="88"
-        height="31"
-        viewBox="0 0 88 31"
-        preserveAspectRatio="xMidYMid meet"
-      >
-        <g fill="none" fill-rule="evenodd">
+    <StLogo
+      onClick={() => {
+        navigate('/');
+      }}
+    >
+      <svg width="88" height="31" viewBox="0 0 88 31" preserveAspectRatio="xMidYMid meet">
+        <g fill="none" fillRule="evenodd">
           <path
             fill="#35C5F0"
             d="M23.131 0H5.03C2.424 0 0 2.411 0 5v20c0 2.59 2.424 5 5.029 5h20.114c2.603 0 5.028-2.41 5.028-5V5c0-2.589-2.425-5-5.028-5H23.13z"
@@ -37,4 +34,4 @@ export default Logo;
 
 const StLogo = styled.div`
   cursor: pointer;
-`
+`;

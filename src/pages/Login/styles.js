@@ -155,6 +155,12 @@ const StyledTagA = styled.a`
   touch-action: manipulation;
 `;
 
+const StyledSpan = styled.span`
+  cursor: pointer;
+  font-size: 15px;
+  color: ${COLOR.chocolate};
+`;
+
 export {
   StyledWrap,
   StyledContainer,
@@ -166,4 +172,5 @@ export {
   StyledSelection,
   StyledTextDiv,
   StyledTagA,
+  StyledSpan,
 };

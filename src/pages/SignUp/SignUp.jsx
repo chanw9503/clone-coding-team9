@@ -4,20 +4,18 @@
  * 작성 목적 : 회원가입구현
  */
 
-import React from 'react';
-import FormInput from '../../components/Input/FormInput';
-import { useMutation, useQueryClient } from 'react-query';
-import { addSign, confirmEmail } from '../../api/auth';
-import { useNavigate } from 'react-router-dom';
-import { useCallback, useState } from 'react';
 import FackBookLogo from '../../components/FackBookLogo/FackBookLogo';
 import KakaoLogo from '../../components/KakaoLogo/KakaoLogo';
 import NaverLogo from '../../components/NaverLogo/NaverLogo';
-import Logo from './Logo';
-import { Link } from 'react-router-dom';
 import useEmailComfirm from '../../hooks/useEmailComfirm';
-import useSignUp from '../../hooks/useSignUp';
+import FormInput from '../../components/Input/FormInput';
 import Select from '../../components/Select/Select';
+import { useNavigate } from 'react-router-dom';
+import useSignUp from '../../hooks/useSignUp';
+import { Link } from 'react-router-dom';
+import React, { useRef } from 'react';
+import { useState } from 'react';
+import Logo from './Logo';
 import {
   StContainer,
   StForm,
@@ -35,7 +33,15 @@ import {
   StButtonForm,
   StLogoForm,
   StLoginNavi,
+  StyledImput,
 } from './Styles';
+import {
+  onChangeEmail,
+  onChangeNickName,
+  onChangePassword,
+  onChangePasswordConfirm,
+} from '../../utils/validation';
+import useGetEmailValidate from '../../hooks/useGetEmailValidate';
 
 function SignUp() {
   const navigate = useNavigate();
@@ -45,6 +51,10 @@ function SignUp() {
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [selected, setSelected] = useState('');
 
+  const [emailCode, setEmailCode] = useState('');
+
+  const [emailClick, setEmailClick] = useState(false);
+
   //오류메시지 상태저장
   const [NickNameMessage, setNickNameMessage] = useState('');
   const [emailMessage, setEmailMessage] = useState('');
@@ -52,15 +62,27 @@ function SignUp() {
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState('');
 
   // 유효성 검사
-  const [isNickName, setIsNickName] = useState(false);
-  const [isEmail, setIsEmail] = useState(false);
-  const [isPassword, setIsPassword] = useState(false);
-  const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
+  const [isNickName, setIsNickName] = useState(true);
+  const [isEmail, setIsEmail] = useState(true);
+  const [isPassword, setIsPassword] = useState(true);
+  const [isPasswordConfirm, setIsPasswordConfirm] = useState(true);
 
-  const queryClient = useQueryClient();
+  const [validate, setValiDate] = useState({
+    email: true,
+    password: true,
+    rePassword: true,
+    nickName: true,
+  });
 
   const mutation = useSignUp();
+  const EmailMutation = useGetEmailValidate();
+
   const confirmSendEmail = useEmailComfirm();
+
+  const emailRef = useRef(false);
+  const passwordRef = useRef(false);
+  const rePasswordRef = useRef(false);
+  const nickNameRef = useRef(false);
 
   const emailOption = [
     'naver.com',
@@ -73,19 +95,38 @@ function SignUp() {
     'icloud.com',
   ];
 
-  //회원가입 보내기
-  const newUser = {
-    id: 8,
-    userEmail: email + '@' + selected,
-    nickname: nickName,
-    password: password,
-    confirm: passwordConfirm,
-  };
-
   const onSubmit = (e) => {
     e.preventDefault();
-    mutation.mutate(newUser);
-    navigate('/');
+
+    if (validate.email === true) {
+      alert('이메일을 다시 확인해 주세요.');
+      emailRef.current.focus();
+      setIsEmail(false);
+    } else if (validate.password === true) {
+      alert('비밀번호를 다시 확인해 주세요.');
+      passwordRef.current.focus();
+      setIsPassword(false);
+    } else if (validate.rePassword === true) {
+      alert('비밀번호 확인을 다시 확인해 주세요.');
+      rePasswordRef.current.focus();
+      setIsPasswordConfirm(false);
+    } else if (validate.nickName === true) {
+      alert('닉네임을 다시 확인해 주세요.');
+      nickNameRef.current.focus();
+      setIsNickName(false);
+    } else {
+      //회원가입 보내기
+      const newUser = {
+        id: 8,
+        userEmail: email + '@' + selected,
+        nickname: nickName,
+        password: password,
+        confirm: passwordConfirm,
+      };
+
+      mutation.mutate(newUser);
+      navigate('/');
+    }
   };
 
   //이메일인증보내기
@@ -99,70 +140,59 @@ function SignUp() {
     confirmSendEmail.mutate(userEmail);
   };
 
-  // 이메일(유효성)
-  const onChangeEmail = useCallback((e) => {
-    const emailRegex =
-      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-    const emailCurrent = e.target.value;
-    setEmail(emailCurrent);
+  const onValidateEmail = (e) => {
+    const validateEmail = onChangeEmail(
+      e.target.value,
+      setEmail,
+      setIsEmail,
+      setEmailMessage,
+      setEmailClick
+    );
 
-    if (!emailRegex.test(emailCurrent)) {
-      setEmailMessage('이메일 형식이 올바르지 않습니다.');
-      setIsEmail(false);
-    } else {
-      setEmailMessage('');
-      setIsEmail(true);
-    }
-  }, []);
+    setValiDate({ ...validate, email: validateEmail });
+  };
 
-  // 비밀번호(유효성)
-  const onChangePassword = useCallback((e) => {
-    const passwordRegex = /^[a-zA-Z0-9]{8,30}$/;
-    const passwordCurrent = e.target.value;
-    setPassword(passwordCurrent);
+  const onValidatePassword = (e) => {
+    const validatePassword = onChangePassword(
+      e.target.value,
+      setPassword,
+      setIsPassword,
+      setPasswordMessage
+    );
 
-    if (!passwordRegex.test(passwordCurrent)) {
-      setPasswordMessage('비밀번호는 영문, 숫자를 포함하여 8자 이상이어야 합니다');
-      setIsPassword(false);
-    } else {
-      setPasswordMessage('');
-      setIsPassword(true);
-    }
-  }, []);
+    setValiDate({ ...validate, password: validatePassword });
+  };
 
-  // 비밀번호 확인(유효성)
-  const onChangePasswordConfirm = useCallback(
-    (e) => {
-      const passwordConfirmCurrent = e.target.value;
-      setPasswordConfirm(passwordConfirmCurrent);
+  const onValidaterePassword = (e) => {
+    const validaterePassword = onChangePasswordConfirm(
+      password,
+      e.target.value,
+      setPasswordConfirm,
+      setIsPasswordConfirm,
+      setPasswordConfirmMessage
+    );
 
-      if (password === passwordConfirmCurrent) {
-        setPasswordConfirmMessage('');
-        setIsPasswordConfirm(true);
-      } else {
-        setPasswordConfirmMessage('비밀번호가 일치하지 않습니다.');
-        setIsPasswordConfirm(false);
-      }
-    },
-    [password]
-  );
+    setValiDate({ ...validate, rePassword: validaterePassword });
+  };
 
-  // 이름(유효성)
-  const onChangeNickName = useCallback((e) => {
-    const nickNameRegex = /^[a-zA-Z가-힣0-9]{2,30}$/;
-    const nickNameCurrent = e.target.value;
-    setNickName(nickNameCurrent);
-    if (!nickNameRegex.test(nickNameCurrent)) {
-      setNickNameMessage('2글자 이상 입력해주세요.');
-      setIsNickName(false);
-    } else {
-      setNickNameMessage('올바른 이름 형식입니다 :)');
-      setIsNickName(true);
-    }
-  }, []);
+  const onValidateNickName = (e) => {
+    const validateNickName = onChangeNickName(
+      e.target.value,
+      setNickName,
+      setIsNickName,
+      setNickNameMessage
+    );
+
+    setValiDate({ ...validate, nickName: validateNickName });
+  };
 
   const onSelectHandler = (newValue) => {
     setSelected(newValue);
+  };
+
+  const ClickEmailCodeHandler = (e) => {
+    e.preventDefault();
+    EmailMutation.mutate(emailCode);
   };
 
   return (
@@ -180,13 +210,15 @@ function SignUp() {
             </StLogoForm>
           </StSns>
           <StEmailWrap>
-            <StContents>이메일</StContents>
+            <StContents isEail={isEmail}>이메일</StContents>
             <StEmailForm>
               <StInputFrom
                 type="text"
                 placeholder="이메일"
                 value={email}
-                onChange={onChangeEmail}
+                onChange={onValidateEmail}
+                borderColor={isEmail}
+                ref={emailRef}
               />
               <span style={{ color: '#424242' }}>&nbsp;@&nbsp;</span>
               <Select
@@ -195,26 +227,68 @@ function SignUp() {
                 options={emailOption}
                 value={selected}
                 onChange={onSelectHandler}
+                validate={isEmail}
               />
             </StEmailForm>
+            {email.length > 0 && (
+              <StErrorMessage className={`message ${isEmail ? 'success' : 'error'}`}>
+                {emailMessage}
+              </StErrorMessage>
+            )}
           </StEmailWrap>
-          {email.length > 0 && (
-            <StErrorMessage className={`message ${isEmail ? 'success' : 'error'}`}>
-              {emailMessage}
-            </StErrorMessage>
-          )}
+
           <StButtonForm>
-            <StButton
-              color="rgb(194, 200, 204)"
-              bc="rgb(247, 248, 250)"
-              bdc="rgb(218, 220, 224)"
-              hc="rgb(218, 220, 224)"
-              mb="30px"
-              type="submit"
-              onClick={sendEmail}
-            >
-              이메일 인증하기
-            </StButton>
+            {isEmail && email !== '' ? (
+              <StButton
+                color="rgb(194, 200, 204)"
+                bc="rgb(247, 248, 250)"
+                bdc="rgb(218, 220, 224)"
+                hc="rgb(218, 220, 224)"
+                mb="5px"
+                type="submit"
+                onClick={(e) => {
+                  sendEmail(e);
+                  setEmailClick(!emailClick);
+                }}
+              >
+                이메일 인증하기
+              </StButton>
+            ) : (
+              <StButton
+                color="rgb(194, 200, 204)"
+                bc="rgb(247, 248, 250)"
+                bdc="rgb(218, 220, 224)"
+                hc="rgb(218, 220, 224)"
+                mb="5px"
+                type="submit"
+                onClick={(e) => {
+                  sendEmail(e);
+                  setEmailClick(!emailClick);
+                }}
+                disabled
+              >
+                이메일 인증하기
+              </StButton>
+            )}
+
+            {emailClick === true && isEmail === true ? (
+              <>
+                <StyledImput
+                  value={emailCode}
+                  onChange={(e) => setEmailCode(e.target.value)}
+                />
+                <StButton
+                  mt="0"
+                  color="#fff"
+                  bc="#35c5f0"
+                  type="submit"
+                  hc="rgb(9, 173, 219)"
+                  onClick={ClickEmailCodeHandler}
+                >
+                  인증하기
+                </StButton>
+              </>
+            ) : null}
           </StButtonForm>
           <FormInput
             type="password"
@@ -222,40 +296,35 @@ function SignUp() {
             label="비밀번호"
             labelcomment="영문, 숫자를 포함한 8자 이상의 비밀번호를 입력해주세요."
             placeholder="비밀번호"
+            isError={isPassword}
+            error={passwordMessage}
             value={password}
-            onChange={onChangePassword}
+            isPassword={isPassword}
+            onChange={onValidatePassword}
+            reference={passwordRef}
           />
-          {password.length > 0 && (
-            <StErrorMessage className={`message ${isPassword ? 'success' : 'error'}`}>
-              {passwordMessage}
-            </StErrorMessage>
-          )}
           <FormInput
             type="password"
             size="medium"
             label="비밀번호 확인"
             placeholder="비밀번호 확인"
+            isError={isPasswordConfirm}
+            error={passwordConfirmMessage}
             value={passwordConfirm}
-            onChange={onChangePasswordConfirm}
+            onChange={onValidaterePassword}
+            reference={rePasswordRef}
           />
-          <StErrorMessage
-            className={`message ${isPasswordConfirm ? 'success' : 'error'}`}
-          >
-            {passwordConfirmMessage}
-          </StErrorMessage>
           <FormInput
             size="medium"
             label="닉네임"
             labelcomment="다른 유저와 겹치지 않도록 입력해주세요. (2~15자)"
             placeholder="별명 (2~15자)"
             value={nickName}
-            onChange={onChangeNickName}
+            onChange={onValidateNickName}
+            isError={isNickName}
+            error={NickNameMessage}
+            reference={nickNameRef}
           />
-          {nickName.length > 0 && (
-            <span className={`message ${isNickName ? 'success' : 'error'}`}>
-              {NickNameMessage}
-            </span>
-          )}
           <StButtonForm>
             <StButton
               color="#fff"
