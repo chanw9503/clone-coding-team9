@@ -50,11 +50,13 @@ const StyledUl = styled.ul`
     width: 0;
     position: absolute;
     top: -2px;
-    left: 30px;
+    left: 0;
+    ${({ pos, isCenter }) => {
+      if (isCenter) return `left: ${pos.width / 2}px;`;
+      return `left: 40px;`;
+    }}
 
     transform: translate(-50%, -50%);
-
-    //삼각형 추가
     border-radius: 15px;
     border: 12px solid transparent;
     border-top-width: 0;

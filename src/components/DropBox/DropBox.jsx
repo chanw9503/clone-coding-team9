@@ -11,8 +11,8 @@ function DropBox(props) {
 
   useEffect(() => {
     const { current } = ref;
-    const { top, left, height } = current.getBoundingClientRect();
-    setBtnPosition({ top, left, height });
+    const { top, left, height, width } = current.getBoundingClientRect();
+    setBtnPosition({ top, left, width, height });
   }, [ref]);
 
   const mouseOverHandler = (e) => {
