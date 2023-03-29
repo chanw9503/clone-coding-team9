@@ -15,7 +15,7 @@ function ImageUpload(props) {
         preview_URL: preview_URL,
       });
 
-      const s3Location = uploadFile(file);
+      const s3Location = uploadFile(file); //URL로 받기
       /**
        * 부모에서 내려주는 props 추가
        * const newLocationList = locationList
