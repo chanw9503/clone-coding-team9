@@ -35,7 +35,7 @@
         {
           "img": "https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/167963499318141804.JPG?w=720",
           "space": "string",
-          "content": "봄에도 역시 저는 화이트인가봐요! 맘에 들었던 구비조명으로 이공간 저 공간 이동하는중:)",
+          "comment": "봄에도 역시 저는 화이트인가봐요! 맘에 들었던 구비조명으로 이공간 저 공간 이동하는중:)",
           "tags": "string"
         }
       ]
@@ -53,7 +53,7 @@
         {
           "img": "https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/167963518701777041.JPG?w=720",
           "space": "string",
-          "content": "날이 좋아 청소 한바탕 하고 정돈된 서재에서 잠시 열일 좀 해볼까해요. 모두 해피 주말🫶🏻",
+          "comment": "날이 좋아 청소 한바탕 하고 정돈된 서재에서 잠시 열일 좀 해볼까해요. 모두 해피 주말🫶🏻",
           "tags": "string"
         }
       ]
@@ -71,7 +71,7 @@
         {
           "img": "https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/167963546220570866.JPG?w=720",
           "space": "string",
-          "content": "오랜만에 주방샷입니다 사실 주방이 굉장히 작은 편이라 살림살이 조금만 차도 지저분해져서 사진을 잘 안찍게 되는데, 오랜만에 찍어봤어요:) 다른 큰 집 주방처럼 심플하지 않은건 같은 양의 물건을 두어도 꽉차 보이기 때문",
+          "comment": "오랜만에 주방샷입니다 사실 주방이 굉장히 작은 편이라 살림살이 조금만 차도 지저분해져서 사진을 잘 안찍게 되는데, 오랜만에 찍어봤어요:) 다른 큰 집 주방처럼 심플하지 않은건 같은 양의 물건을 두어도 꽉차 보이기 때문",
           "tags": "string"
         }
       ]
@@ -89,7 +89,7 @@
         {
           "img": "https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/164311062414592935.jpeg?w=720",
           "space": "string",
-          "content": " 우리집 분위기 오때요🤎 전 너~무 예쁜데욬ㅋㅋㅋ아이엔지홈에서 컴피 아쿠아텍스 패브릭 3인 모듈소파를 보내주셨어요! 내장제가",
+          "comment": " 우리집 분위기 오때요🤎 전 너~무 예쁜데욬ㅋㅋㅋ아이엔지홈에서 컴피 아쿠아텍스 패브릭 3인 모듈소파를 보내주셨어요! 내장제가",
           "tags": "string"
         }
       ]
@@ -107,7 +107,7 @@
         {
           "img": "https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/167232191798246997.jpeg?w=720",
           "space": "string",
-          "content": "2층거실 선반 위에 있는 나비란과 립살리스 카스타. 특별한 관리 없이도 잘 자라주는 기특한 아이들이네요.",
+          "comment": "2층거실 선반 위에 있는 나비란과 립살리스 카스타. 특별한 관리 없이도 잘 자라주는 기특한 아이들이네요.",
           "tags": "string"
         }
       ]
@@ -125,7 +125,7 @@
         {
           "img": "https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/167232191987070305.jpeg?w=720",
           "space": "string",
-          "content": "벚꽃놀이 갈 때 딱인 도시락메뉴💛 저희 동네에도 벚꽃이 만개했더라구요 날도 따뜻해서 그런지 나들이 가시는 분들 많으시던데 도",
+          "comment": "벚꽃놀이 갈 때 딱인 도시락메뉴💛 저희 동네에도 벚꽃이 만개했더라구요 날도 따뜻해서 그런지 나들이 가시는 분들 많으시던데 도",
           "tags": "string"
         }
       ]
@@ -143,7 +143,7 @@
         {
           "img": "https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/167880249631212075.jpeg?w=720",
           "space": "string",
-          "content": "로망이었던 화이트우드 부엌으로 인테리어 하였습니다ㅎㅎ상부장을 없애고 선반을 설치해 더 넓어보이고 하부장 컬러와 맞춰서 포인트를 주었습니다! 또한 곳곳에 귀여운 캐릭터",
+          "comment": "로망이었던 화이트우드 부엌으로 인테리어 하였습니다ㅎㅎ상부장을 없애고 선반을 설치해 더 넓어보이고 하부장 컬러와 맞춰서 포인트를 주었습니다! 또한 곳곳에 귀여운 캐릭터",
           "tags": "string"
         }
       ]
@@ -161,7 +161,7 @@
         {
           "img": "https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/167880250041279196.jpeg?w=720",
           "space": "string",
-          "content": "침실에 라탄과 식물 들이기🤎 봄여름 인테리어로 조금 더 가벼운 느낌 내고 싶었는데 이제 조금 더 따뜻해져서 침구만 바꿔주면 되겠어요🙃",
+          "comment": "침실에 라탄과 식물 들이기🤎 봄여름 인테리어로 조금 더 가벼운 느낌 내고 싶었는데 이제 조금 더 따뜻해져서 침구만 바꿔주면 되겠어요🙃",
           "tags": "string"
         }
       ]
@@ -179,7 +179,7 @@
         {
           "img": "https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/167880250331449433.jpeg?w=720",
           "space": "string",
-          "content": "영양제 딜레마. 꺼내두자니 지저분하고 넣어두면 까먹고 안먹게되는거 저만그런가요? 아이들은 그래도 챙겨먹이자싶어 어쩔수없이 바구니에넣어 주방에 뒀는데 정말 지저분했었거든요. 근데 메디슨박스 온뒤로 영양제들",
+          "comment": "영양제 딜레마. 꺼내두자니 지저분하고 넣어두면 까먹고 안먹게되는거 저만그런가요? 아이들은 그래도 챙겨먹이자싶어 어쩔수없이 바구니에넣어 주방에 뒀는데 정말 지저분했었거든요. 근데 메디슨박스 온뒤로 영양제들",
           "tags": "string"
         }
       ]
@@ -198,19 +198,19 @@
       {
         "img": "https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/167963499318141804.JPG?w=720",
         "space": "string",
-        "content": "봄에도 역시 저는 화이트인가봐요! 맘에 들었던 구비조명으로 이공간 저 공간 이동하는중:)",
+        "comment": "봄에도 역시 저는 화이트인가봐요! 맘에 들었던 구비조명으로 이공간 저 공간 이동하는중:)",
         "tags": ["#주방", "#거실", "#화장실"]
       },
       {
         "img": "https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/167963518701777041.JPG?w=720",
         "space": "string",
-        "content": "날이 좋아 청소 한바탕 하고 정돈된 서재에서 잠시 열일 좀 해볼까해요. 모두 해피 주말🫶🏻",
+        "comment": "날이 좋아 청소 한바탕 하고 정돈된 서재에서 잠시 열일 좀 해볼까해요. 모두 해피 주말🫶🏻",
         "tags": ["#날이", "#좋아", "#다행"]
       },
       {
         "img": "https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/167880250331449433.jpeg?w=720",
         "space": "string",
-        "content": "영양제 딜레마. 꺼내두자니 지저분하고 넣어두면 까먹고 안먹게되는거 저만그런가요? 아이들은 그래도 챙겨먹이자싶어 어쩔수없이 바구니에넣어 주방에 뒀는데 정말 지저분했었거든요. 근데 메디슨박스 온뒤로 영양제들",
+        "comment": "영양제 딜레마. 꺼내두자니 지저분하고 넣어두면 까먹고 안먹게되는거 저만그런가요? 아이들은 그래도 챙겨먹이자싶어 어쩔수없이 바구니에넣어 주방에 뒀는데 정말 지저분했었거든요. 근데 메디슨박스 온뒤로 영양제들",
         "tags": ["영양제", "#딜레마", "#저저분"]
       }
     ]
