@@ -29,6 +29,7 @@ function Card({ data }) {
   const [bookMark, setBookMark] = useState(false);
   const mutation = usePutLike();
 
+  console.log(data.boards);
   return (
     <StyledCardBlock>
       <StyledArticle>
@@ -92,17 +93,17 @@ function Card({ data }) {
               <StyledButton>
                 <ChatIcon />
                 <span style={{ verticalAlign: 'center', fontSize: '12px' }}>
-                  {data.commentsCount}
+                  {data.commentCount}
                 </span>
               </StyledButton>
             </StyledBtnBox>
-            {data.boards[0].content.length >= 80 ? (
+            {data.boards[0].comment?.length >= 80 ? (
               <StyledCommentbox onClick={() => navigate(`/Detail/${data.postId}`)}>
-                {data.boards[0].content.slice(0, 80) + '...'}
+                {data.boards[0].comment.slice(0, 80) + '...'}
               </StyledCommentbox>
             ) : (
               <StyledCommentbox onClick={() => navigate(`/Detail/${data.postId}`)}>
-                {data.boards[0].content}
+                {data.boards[0].comment}
               </StyledCommentbox>
             )}
           </StyledContent>
