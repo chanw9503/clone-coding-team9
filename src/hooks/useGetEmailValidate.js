@@ -2,7 +2,7 @@ import React from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { keys } from '../utils/createQueryKey';
 import api from '../axios/api';
-import { getCookie } from '../auth/Cookie';
+import { getCookie, removeCookie } from '../auth/Cookie';
 
 const useGetEmailValidate = () => {
   const queryClient = useQueryClient();
@@ -10,15 +10,17 @@ const useGetEmailValidate = () => {
   const mutation = useMutation({
     mutationKey: keys.GET_EMAIL_VALIDATE,
     mutationFn: async (payload) => {
-      const { data } = await api.get(`/validateCheck/${payload}`, {
+      const config = await api.get(`/validateCheck/${payload}`, {
         headers: {
-          Authorization: getCookie('emailToken'),
+          emailToken: getCookie('emailToken'),
         },
       });
+
+      console.log(config);
     },
-    // onSuccess : () =>{
-    //  queryClient.invalidateQueries(keys.GET_EMAIL_VALIDATE);
-    // }
+    onSuccess: () => {
+      removeCookie('emailToken');
+    },
   });
 
   return mutation;

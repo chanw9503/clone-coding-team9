@@ -3,6 +3,7 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
 export const setCookie = (name, value, option) => {
+  if (getCookie(name)) removeCookie(name);
   return cookies.set(name, value, { ...option });
 };
 
