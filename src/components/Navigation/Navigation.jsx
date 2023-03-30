@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid';
 import React, { useState } from 'react';
 import {
   StyledWrap,
@@ -17,12 +18,11 @@ function Navigation() {
           {menuList.map((item, index) => {
             if (+index === +count) {
               return (
-                <StyledItemBox borderColor={true}>
+                <StyledItemBox key={nanoid()} borderColor={true}>
                   <StyledNavItem
                     onClick={(e) => {
                       setCount(e.target.id);
                     }}
-                    key={index}
                     id={index}
                   >
                     {item}
@@ -32,10 +32,10 @@ function Navigation() {
             } else {
               return (
                 <StyledNavItem
+                  key={nanoid()}
                   onClick={(e) => {
                     setCount(e.target.id);
                   }}
-                  key={index}
                   id={index}
                 >
                   {item}
