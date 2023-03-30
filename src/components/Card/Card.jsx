@@ -74,7 +74,7 @@ function Card({ data }) {
                   //<BsHeart style={{ fontSize: '25px' }} />
                 )}
                 <span style={{ verticalAlign: 'center', fontSize: '12px' }}>
-                  {data.likesCount}
+                  {data.likesCount + (isLike ? 1 : 0)}
                 </span>
               </StyledButton>
               <StyledButton

@@ -7,15 +7,17 @@ function usePutLike() {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: async (payload) => {
-      const data = await api.put(`/posts/${payload}/like`, {
+      const data = await api.put(`/posts/${payload}/like`, undefined, {
         headers: {
-          Authorization: getCookie(['token']),
+          Authorization: getCookie('token'),
         },
       });
+
       return data;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries(keys.PUT_LIKE);
+    onSuccess: (config) => {
+      queryClient.invalidateQueries(keys.GET_DETAIL_BOARD);
+      return config;
     },
   });
 
