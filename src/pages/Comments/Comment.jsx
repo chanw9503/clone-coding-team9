@@ -15,11 +15,14 @@ import { keys } from '../../utils/createQueryKey';
 import CommentImage from './CommentImage';
 import { StComment, StCommentCountFrom, StCommentId, StCommentImageInner, StCommentInputForm, StCommentInputInner, StCommentTitleBox,  StCommnetBox, StCommnetForm, StContainer, StDateForm, StForm, StInputBox, StInputBoxForm, StInputBoxInner, StInputBtn, StInputBtnForm, StInputCotents, StLikeBtn, StLikeForm, StRecordForm, StTileForm } from './Styles';
 import api from '../../axios/api';
+import LikeIcon from '../../components/LikeIcon/LikeIcon';
+
 
 function Comment() {
     const { id } = useParams();
     const [comments, setComments] =useState('');
     const [isTokenAct, setIsTokenAct] = useState(false);
+    // const [isLike, setLike] = useState(false);
 
     const { data, isLoading } = useQuery({
       queryKey: keys.GET_COMMENT,
@@ -28,7 +31,7 @@ function Comment() {
         return data.data;
       },
     });
-
+    
     useEffect(()=> {
       checkTokenStatus();
     }, []);
@@ -50,18 +53,22 @@ function Comment() {
           comment:{comment: comments}};
         mutation.mutate(newComment);
         setComments('')
+        window.alert('댓글이 추가되었습니다')
     };
 
     //댓글 삭제
     const deleteComment = useDeleteComment(id);
-    const deleteCommentHandler = () => {
-      deleteComment.mutate()
+    const deleteCommentHandler = async(commentId) => {
+      await deleteComment.mutate(commentId)
+      window.alert('댓글이 삭제되었습니다')
     };
 
     //댓글 수정
+    // const [isEdit, setIsEdit] = useState(false);
+    // const [newComment, setNewComment] = useState(false);
     // const updateComment = usePatchComment();
     // const updateCommnetHandler = () => {
-    //   updateComment.mutate(update)
+    //   updateComment.mutate(newComment)
     // };
     
   return (
@@ -107,13 +114,24 @@ function Comment() {
                   </StCommentImageInner>
                   <StCommentTitleBox>
                     <StCommentId>{el.nickname}</StCommentId>
+                    {/* {isEdit ? (
+                      <input 
+                      type="text"
+                      value = {newCommnet}
+                      onChange ={(e) => setNewCommnet(e.target.value)}
+                      >
+                      {el.comment}
+                      </input>
+                    ):(
                     <StComment>
-                    {el.comment}
-                    </StComment>
+                      {el.comment}
+                      </StComment>) } */}
+                    <StComment>{el.comment}</StComment>
                     <StRecordForm>
                       <StDateForm>1주 전 ・</StDateForm>
                       <StLikeForm>
-                        <StLikeBtn type="button">
+                        <StLikeBtn>
+                          <LikeIcon width="14px"/>
                           <span />
                           <span>좋아요 ・ </span>
                         </StLikeBtn>
@@ -124,29 +142,32 @@ function Comment() {
                       </StLikeForm>
                       {/* <StLikeForm>
                         <StLikeBtn 
-                        onClick={updateCommnetHandler}>
+                        onClick={(el)=>{
+                          updateComment(el.commentId);
+                          setIsEdit(!isEdit)
+                        }}>
                           답글 수정</StLikeBtn>
                         <span> ・ </span>
                       </StLikeForm> */}
                       {isTokenAct ? (
-                          <StLikeForm>
-                            <StLikeBtn
-                            onClick={deleteCommentHandler}>
-                              삭제</StLikeBtn>
-                          </StLikeForm>
-                        ) : (
-                          <StLikeForm>
-                            <StLikeBtn>신고</StLikeBtn>
-                          </StLikeForm>
-                        )}
+                        <StLikeForm>
+                          <StLikeBtn
+                            onClick={() => deleteCommentHandler(el.commentId)}
+                          >
+                            삭제
+                          </StLikeBtn>
+                        </StLikeForm>
+                      ) : (
+                        <StLikeForm>
+                          <StLikeBtn>신고</StLikeBtn>
+                        </StLikeForm>
+                      )}
                     </StRecordForm>
                   </StCommentTitleBox>
                 </StCommnetForm>
-                );
+              );
             })}
           </StCommnetBox>
-
-          
         </StForm>
       </StContainer>
     </>
