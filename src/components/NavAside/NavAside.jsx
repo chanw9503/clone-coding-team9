@@ -43,11 +43,11 @@ function NavAside(props) {
       <StyledCircleBlock>
         <BookMark />
       </StyledCircleBlock>
-      <StyledCountBlock>123</StyledCountBlock>
+      <StyledCountBlock></StyledCountBlock>
       <StyledCircleBlock>
         <ChatIcon />
       </StyledCircleBlock>
-      <StyledCountBlock>123</StyledCountBlock>
+      <StyledCountBlock>{props.commentsCount}</StyledCountBlock>
     </StyldWrap>
   );
 }

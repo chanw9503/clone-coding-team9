@@ -15,8 +15,6 @@ const useGetEmailValidate = () => {
           emailToken: getCookie('emailToken'),
         },
       });
-
-      console.log(config);
     },
     onSuccess: () => {
       removeCookie('emailToken');

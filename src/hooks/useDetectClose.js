@@ -19,7 +19,6 @@ function useDetectClose(initialState) {
 
   useEffect(() => {
     const onClick = (e) => {
-      console.log('click');
       if (ref.current !== null && !ref.current.contains(e.target)) {
         SetIsOpen(!isOpen);
       }

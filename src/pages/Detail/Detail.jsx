@@ -40,7 +40,10 @@ function Detail() {
   return (
     <>
       <Header />
-      <NavAside likesCount={data?.post.likesCount} />
+      <NavAside
+        commentsCount={data?.post.commentsCount}
+        likesCount={data?.post.likesCount}
+      />
       <StyledWrap>
         <StyledContainer>
           <StyledMarginBlock>
