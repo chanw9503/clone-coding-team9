@@ -4,7 +4,7 @@
  * 작성 목적 : 회원가입구현
  */
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   StCategory,
   StCommentForm,
@@ -19,78 +19,140 @@ import {
   StPostBtn,
   StPostForm,
   StSeletWrap,
+  StSendImage,
   StSendImageWrap,
   StTagWrap,
   StWrap,
-} from './PostsStyles';
+  StyledFlex,
+  StyledImage,
+  Styledli,
+  StyledOl,
+  StyledPaddingBlock,
+} from './styles';
 import LogoType from '../../components/LogoType/LogoType';
-import Navi from './Navi';
+import Navi from './Navi/Navi';
 import Select from '../../components/Select/Select';
 import { useState } from 'react';
 import Tag from '../../components/HashTag/Tag';
 import ImageUpload from '../../components/ImageUpload/ImageUpload';
 import usePostBoard from '../../hooks/usePostBoard';
+import {
+  sizeOptions,
+  stlyeOptions,
+  lifeTypeOptions,
+  spaceOptions,
+} from '../../shared/options';
+import { nanoid } from 'nanoid';
+import { useDispatch, useSelector } from 'react-redux';
+import { addBoards, addContents, initState } from '../../redux/Modules/boardSlice';
+import { uploadFile } from '../../utils/upload';
+import { useNavigate } from 'react-router-dom';
 
 function Posts() {
-  const [image, setImage] = useState({
-    image_file: '',
-    preview_URL: '',
-  });
-
+  const navigate = useNavigate();
   const [houseType, setHouseype] = useState({
     size: '',
-    stlye: '',
+    style: '',
     lifeType: '',
   });
 
-  const changeInputHandler = (e) => {
-    const { value, name } = e.target;
+  const boardsRef = useRef([
+    {
+      space: '',
+      content: '',
+      tags: [],
+    },
+  ]);
+
+  const data = useSelector((state) => state.boards.boards);
+  const contents = useSelector((state) => state.boards.contents);
+
+  console.log('data', data);
+
+  useEffect(() => {
+    boardsRef.current = contents;
+  }, []);
+
+  const dispatch = useDispatch();
+
+  const changeInputHandler = (e, name) => {
+    const value = e;
     setHouseype((old) => {
       return { ...old, [name]: value };
     });
   };
 
+  const changeContentHandler = (e, index) => {
+    const value = e.target.value;
+
+    const newBoard = [...boardsRef.current];
+    newBoard[index] = { ...newBoard[index], content: value };
+    boardsRef.current = newBoard;
+  };
+
+  const changeSelectHandler = (e, index) => {
+    const value = e;
+    const newBoard = [...boardsRef.current];
+    newBoard[index] = { ...newBoard[index], space: value };
+    boardsRef.current = newBoard;
+  };
+
+  const getUrl = async (file) => {
+    const s3Location = await uploadFile(file); //URL로 받기
+
+    const newBoard = {
+      img: s3Location,
+      space: '',
+      content: '',
+      tags: [],
+    };
+    dispatch(addContents(boardsRef.current));
+    dispatch(addBoards(newBoard));
+  };
+
+  const addImageHandler = (e) => {
+    e.preventDefault();
+
+    getUrl(e.target.files[0]);
+  };
+
   const mutation = usePostBoard();
 
   const submitAddBoard = (e) => {
-    mutation.mutate();
-  };
+    const newBoards = data.map((item, index) => {
+      const temp = [...boardsRef.current];
 
-  const sizeOptions = [
-    '10평 미만',
-    '10평대',
-    '20평대',
-    '30평대',
-    '40평대',
-    '50평대 이상',
-  ];
-  const stlyeOptions = ['원룸&오피스텔', '아파트', '빌라&연립', '단독주택'];
-  const lifeTypeOptions = [
-    '모던',
-    '북유럽',
-    '빈티지',
-    '내추럴',
-    '프로방스&로맨틱',
-    '한국&아시아',
-    '유니크',
-  ];
-  const space = [
-    '원룸',
-    '거실',
-    '침실',
-    '주방',
-    '욕실',
-    '아이방',
-    '드레스룸',
-    '서재&작업실',
-    '베란다',
-    '가구&소품',
-  ];
+      const tags = temp[index]?.tags?.reduce((acc, cur) => {
+        return (acc += '#' + cur.hashtag);
+      }, '');
+
+      const newBoard = {
+        img: item.img,
+        content: temp[index].content,
+        space: temp[index].space,
+        tags: tags,
+      };
+
+      return newBoard;
+    });
+
+    const posts = {
+      size: houseType.size,
+      style: houseType.style,
+      lifeType: houseType.lifeType,
+      boards: newBoards,
+    };
+
+    console.log(posts);
+    mutation.mutate(posts);
+    dispatch(initState());
+    navigate('/');
+  };
 
   return (
     <StWrap>
       <StHeader>
-        <LogoType />
+        <LogoType onClick={() => navigate('/')} />
         <StPostBtn onClick={submitAddBoard}>올리기</StPostBtn>
       </StHeader>
       <StCategory />
@@ -105,7 +167,7 @@ function Posts() {
                 defaultValue="평수"
                 options={sizeOptions}
                 value={houseType.size}
-                onChange={changeInputHandler}
+                onChange={(e) => changeInputHandler(e, 'size')}
               />
             </StIput>
             <StIput>
@@ -115,7 +177,7 @@ function Posts() {
                 defaultValue="주거형태"
                 options={stlyeOptions}
                 value={houseType.style}
-                onChange={changeInputHandler}
+                onChange={(e) => changeInputHandler(e, 'style')}
               />
             </StIput>
             <StIput>
@@ -125,7 +187,7 @@ function Posts() {
                 defaultValue="스타일"
                 options={lifeTypeOptions}
                 value={houseType.lifeType}
-                onChange={changeInputHandler}
+                onChange={(e) => changeInputHandler(e, 'lifeType')}
               />
             </StIput>
           </StContainer>
@@ -133,22 +195,62 @@ function Posts() {
         <StContentsWrap>
           <StContentOut>
             <StContentInner>
-              <StSendImageWrap>
-                {<ImageUpload image={image} setImage={setImage} />}
-              </StSendImageWrap>
-              <StCommentWrap>
-                <StCommnetInnerSelect>
-                  <Select name="space" defaultValue="공간(필수)" options={space} />
-                </StCommnetInnerSelect>
-                <StCommentForm
-                  name="description"
-                  placeholder="사진에 대해 설명해주세요."
-                  rows="6"
-                />
-                <StTagWrap>
-                  <Tag />
-                </StTagWrap>
-              </StCommentWrap>
+              <StyledOl>
+                {data?.map((item, index) => {
+                  return (
+                    <StyledPaddingBlock key={nanoid()}>
+                      <Styledli>
+                        <StyledFlex>
+                          <StSendImageWrap>
+                            {data[0]?.img === '' ? (
+                              <ImageUpload boardsRef={boardsRef} index={index} />
+                            ) : (
+                              <StyledImage src={item.img} />
+                            )}
+                          </StSendImageWrap>
+                          <StCommentWrap>
+                            <StCommnetInnerSelect>
+                              <Select
+                                value={contents[index]?.space}
+                                name="space"
+                                defaultValue="공간(필수)"
+                                options={spaceOptions}
+                                onChange={(e) => changeSelectHandler(e, index)}
+                              />
+                            </StCommnetInnerSelect>
+                            <StCommentForm
+                              name="description"
+                              placeholder={contents[index]?.content}
+                              onChange={(e) => changeContentHandler(e, index)}
+                              rows="6"
+                            />
+                            <StTagWrap>
+                              <Tag
+                                value={contents[index]?.tags}
+                                boardsRef={boardsRef}
+                                index={index}
+                              />
+                            </StTagWrap>
+                          </StCommentWrap>
+                        </StyledFlex>
+                      </Styledli>
+                    </StyledPaddingBlock>
+                  );
+                })}
+              </StyledOl>
+              {data[0]?.img !== '' && (
+                <>
+                  <StSendImage>
+                    추가하기
+                    <input
+                      type="file"
+                      accept="image/*"
+                      hidden
+                      onChange={addImageHandler}
+                    />
+                  </StSendImage>
+                </>
+              )}
             </StContentInner>
           </StContentOut>
         </StContentsWrap>
