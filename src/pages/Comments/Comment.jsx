@@ -100,7 +100,7 @@ function Comment() {
         <StForm>
           <StTileForm>
             댓글
-            <StCommentCountFrom>1</StCommentCountFrom>
+            <StCommentCountFrom>{data?.comments ? data?.comments.length : 0}</StCommentCountFrom>
           </StTileForm>
           <StCommentInputForm>
             <StCommentInputInner>
