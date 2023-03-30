@@ -41,7 +41,6 @@ import api from '../../axios/api';
 import { nanoid } from 'nanoid';
 import LikeIcon from '../../components/LikeIcon/LikeIcon';
 
-
 function Comment() {
   const { id } = useParams();
   const [comments, setComments] = useState('');
@@ -68,32 +67,33 @@ function Comment() {
     }
   };
 
-    //댓글 추가
-    const mutation = usePostComment();
-    const addCommentHandler =() => {
-        const newComment = { 
-          id,
-          comment:{comment: comments}};
-        mutation.mutate(newComment);
-        setComments('')
-        window.alert('댓글이 추가되었습니다')
+  //댓글 추가
+  const mutation = usePostComment();
+  const addCommentHandler = () => {
+    const newComment = {
+      id,
+      comment: { comment: comments },
     };
+    mutation.mutate(newComment);
+    setComments('');
+    window.alert('댓글이 추가되었습니다');
+  };
 
-    //댓글 삭제
-    const deleteComment = useDeleteComment(id);
-    const deleteCommentHandler = async(commentId) => {
-      await deleteComment.mutate(commentId)
-      window.alert('댓글이 삭제되었습니다')
-    };
+  //댓글 삭제
+  const deleteComment = useDeleteComment(id);
+  const deleteCommentHandler = async (commentId) => {
+    await deleteComment.mutate(commentId);
+    window.alert('댓글이 삭제되었습니다');
+  };
 
-    //댓글 수정
-    // const [isEdit, setIsEdit] = useState(false);
-    // const [newComment, setNewComment] = useState(false);
-    // const updateComment = usePatchComment();
-    // const updateCommnetHandler = () => {
-    //   updateComment.mutate(newComment)
-    // };
-    
+  //댓글 수정
+  // const [isEdit, setIsEdit] = useState(false);
+  // const [newComment, setNewComment] = useState(false);
+  // const updateComment = usePatchComment();
+  // const updateCommnetHandler = () => {
+  //   updateComment.mutate(newComment)
+  // };
+
   return (
     <>
       <StContainer>
@@ -152,7 +152,7 @@ function Comment() {
                       <StDateForm>1주 전 ・</StDateForm>
                       <StLikeForm>
                         <StLikeBtn>
-                          <LikeIcon width="14px"/>
+                          <LikeIcon width="14px" />
                           <span />
                           <span>좋아요 ・ </span>
                         </StLikeBtn>
@@ -172,9 +172,7 @@ function Comment() {
                       </StLikeForm> */}
                       {isTokenAct ? (
                         <StLikeForm>
-                          <StLikeBtn
-                            onClick={() => deleteCommentHandler(el.commentId)}
-                          >
+                          <StLikeBtn onClick={() => deleteCommentHandler(el.commentId)}>
                             삭제
                           </StLikeBtn>
                         </StLikeForm>
@@ -186,7 +184,6 @@ function Comment() {
                     </StRecordForm>
                   </StCommentTitleBox>
                 </StCommnetForm>
-              );
               );
             })}
           </StCommnetBox>

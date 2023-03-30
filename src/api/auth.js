@@ -2,8 +2,6 @@ import { setCookie } from '../auth/Cookie';
 import api from '../axios/api';
 
 const __login = async (paylaod) => {
-  console.log('__login');
-  console.log(paylaod);
   const response = await api.post('/login', paylaod);
   setCookie('token', response.data.token);
   return response;

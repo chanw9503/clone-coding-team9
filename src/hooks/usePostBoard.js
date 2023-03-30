@@ -12,13 +12,12 @@ const usePostBoard = () => {
           Authorization: getCookie('token'),
         },
       });
-
-      console.log(response);
       return response;
     },
     onSuccess: (config) => {
       alert(config.data.message);
       queryClient.invalidateQueries(keys.POST_BOARDS);
+      queryClient.invalidateQueries(keys.GET_MAIN_BOARD);
     },
   });
 

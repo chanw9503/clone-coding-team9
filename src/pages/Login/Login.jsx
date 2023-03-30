@@ -45,13 +45,12 @@ function Login() {
     onSuccess: (e) => {
       isError.current = false;
       queryClient.invalidateQueries('login');
-      console.log('event', e);
       alert(e.data.message);
       navigate('/');
     },
-    onError: () => {
-      console.log('test');
+    onError: (confing) => {
       isError.current = true;
+      alert('아이디/비번을 다시 확인해 주세요');
       queryClient.invalidateQueries('login');
     },
     onSettled: (e) => {
@@ -61,8 +60,6 @@ function Login() {
         alert('서버와 연결을 확인해 주세요');
         isError.current = true;
       }
-
-      console.log('e', e.name);
     },
   });
 

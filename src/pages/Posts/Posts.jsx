@@ -140,14 +140,11 @@ function Posts() {
       lifeType: houseType.lifeType,
       boards: newBoards,
     };
-
-    console.log(posts);
     mutation.mutate(posts);
     dispatch(initState());
     navigate('/');
   };
 
-  console.log('data------', data);
   return (
     <StWrap>
       <StHeader>
