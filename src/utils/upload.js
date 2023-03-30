@@ -25,7 +25,8 @@ export const uploadFile = async (file) => {
       Body: file,
     },
   });
-  const promise = await upload.promise();
+  const promise = await upload.promise().then((promiseResult) => promiseResult);
+  console.log(promise);
   try {
     console.log('success');
   } catch (err) {
