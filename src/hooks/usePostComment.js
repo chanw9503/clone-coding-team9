@@ -14,7 +14,7 @@ const usePostComment= () => {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(keys.POST_ADD_COMMENT);
+      queryClient.invalidateQueries(keys.GET_COMMENT);
     },
   });
   return mutation;
