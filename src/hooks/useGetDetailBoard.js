@@ -7,7 +7,7 @@ const useGetDetailBoard = (payload) => {
   const { data, isLoading } = useQuery({
     queryKey: keys.GET_DETAIL_BOARD,
     queryFn: async () => {
-      const data = await api.get(`/post`);
+      const data = await api.get(`/posts/${payload}`);
       return data.data;
     },
   });
