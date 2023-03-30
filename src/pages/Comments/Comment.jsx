@@ -13,57 +13,82 @@ import useDeleteComment from '../../hooks/useDeleteComment';
 import usePostComment from '../../hooks/usePostComment';
 import { keys } from '../../utils/createQueryKey';
 import CommentImage from './CommentImage';
-import { StComment, StCommentCountFrom, StCommentId, StCommentImageInner, StCommentInputForm, StCommentInputInner, StCommentTitleBox,  StCommnetBox, StCommnetForm, StContainer, StDateForm, StForm, StInputBox, StInputBoxForm, StInputBoxInner, StInputBtn, StInputBtnForm, StInputCotents, StLikeBtn, StLikeForm, StRecordForm, StTileForm } from './Styles';
+import {
+  StComment,
+  StCommentCountFrom,
+  StCommentId,
+  StCommentImageInner,
+  StCommentInputForm,
+  StCommentInputInner,
+  StCommentTitleBox,
+  StCommnetBox,
+  StCommnetForm,
+  StContainer,
+  StDateForm,
+  StForm,
+  StInputBox,
+  StInputBoxForm,
+  StInputBoxInner,
+  StInputBtn,
+  StInputBtnForm,
+  StInputCotents,
+  StLikeBtn,
+  StLikeForm,
+  StRecordForm,
+  StTileForm,
+} from './Styles';
 import api from '../../axios/api';
+import { nanoid } from 'nanoid';
 
 function Comment() {
-    const { id } = useParams();
-    const [comments, setComments] =useState('');
-    const [isTokenAct, setIsTokenAct] = useState(false);
+  const { id } = useParams();
+  const [comments, setComments] = useState('');
+  const [isTokenAct, setIsTokenAct] = useState(false);
 
-    const { data, isLoading } = useQuery({
-      queryKey: keys.GET_COMMENT,
-      queryFn: async () => {
-        const data = await api.get(`/posts/${id}/comments`);
-        return data.data;
-      },
-    });
+  const { data, isLoading } = useQuery({
+    queryKey: keys.GET_COMMENT,
+    queryFn: async () => {
+      const data = await api.get(`/posts/${id}/comments`);
+      return data.data;
+    },
+  });
 
-    useEffect(()=> {
-      checkTokenStatus();
-    }, []);
+  useEffect(() => {
+    checkTokenStatus();
+  }, []);
 
-    const checkTokenStatus  = () => {
-      const token = getCookie("token");
-      if (token) {
-        setIsTokenAct(true);
-      } else {
-        setIsTokenAct(false);
-      }
+  const checkTokenStatus = () => {
+    const token = getCookie('token');
+    if (token) {
+      setIsTokenAct(true);
+    } else {
+      setIsTokenAct(false);
+    }
+  };
+
+  //댓글 추가
+  const mutation = usePostComment();
+  const addCommentHandler = () => {
+    const newComment = {
+      id,
+      comment: { comment: comments },
     };
+    mutation.mutate(newComment);
+    setComments('');
+  };
 
-    //댓글 추가
-    const mutation = usePostComment();
-    const addCommentHandler =() => {
-        const newComment = { 
-          id,
-          comment:{comment: comments}};
-        mutation.mutate(newComment);
-        setComments('')
-    };
+  //댓글 삭제
+  const deleteComment = useDeleteComment(id);
+  const deleteCommentHandler = () => {
+    deleteComment.mutate();
+  };
 
-    //댓글 삭제
-    const deleteComment = useDeleteComment(id);
-    const deleteCommentHandler = () => {
-      deleteComment.mutate()
-    };
+  //댓글 수정
+  // const updateComment = usePatchComment();
+  // const updateCommnetHandler = () => {
+  //   updateComment.mutate(update)
+  // };
 
-    //댓글 수정
-    // const updateComment = usePatchComment();
-    // const updateCommnetHandler = () => {
-    //   updateComment.mutate(update)
-    // };
-    
   return (
     <>
       <StContainer>
@@ -86,9 +111,7 @@ function Comment() {
                       placeholder="칭찬과 격려의 댓글은 작성자에게 큰 힘이 됩니다:)"
                     />
                     <StInputBtnForm>
-                      <StInputBtn 
-                      type="submit" 
-                      onClick={addCommentHandler}>
+                      <StInputBtn type="submit" onClick={addCommentHandler}>
                         입력
                       </StInputBtn>
                     </StInputBtnForm>
@@ -98,18 +121,16 @@ function Comment() {
             </StCommentInputInner>
           </StCommentInputForm>
 
-            <StCommnetBox>
+          <StCommnetBox>
             {data?.comments.map((el) => {
               return (
-                <StCommnetForm key={el.id}>
+                <StCommnetForm key={nanoid()}>
                   <StCommentImageInner>
                     <CommentImage />
                   </StCommentImageInner>
                   <StCommentTitleBox>
                     <StCommentId>{el.nickname}</StCommentId>
-                    <StComment>
-                    {el.comment}
-                    </StComment>
+                    <StComment>{el.comment}</StComment>
                     <StRecordForm>
                       <StDateForm>1주 전 ・</StDateForm>
                       <StLikeForm>
@@ -129,28 +150,24 @@ function Comment() {
                         <span> ・ </span>
                       </StLikeForm> */}
                       {isTokenAct ? (
-                          <StLikeForm>
-                            <StLikeBtn
-                            onClick={deleteCommentHandler}>
-                              삭제</StLikeBtn>
-                          </StLikeForm>
-                        ) : (
-                          <StLikeForm>
-                            <StLikeBtn>신고</StLikeBtn>
-                          </StLikeForm>
-                        )}
+                        <StLikeForm>
+                          <StLikeBtn onClick={deleteCommentHandler}>삭제</StLikeBtn>
+                        </StLikeForm>
+                      ) : (
+                        <StLikeForm>
+                          <StLikeBtn>신고</StLikeBtn>
+                        </StLikeForm>
+                      )}
                     </StRecordForm>
                   </StCommentTitleBox>
                 </StCommnetForm>
-                );
+              );
             })}
           </StCommnetBox>
-
-          
         </StForm>
       </StContainer>
     </>
   );
-};
+}
 
 export default Comment;
