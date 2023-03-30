@@ -29,14 +29,13 @@ function Card({ data }) {
   const [bookMark, setBookMark] = useState(false);
   const mutation = usePutLike();
 
-  console.log(data.boards);
   return (
     <StyledCardBlock>
       <StyledArticle>
         <div>
           <StyledCardItems>
             <StyledUserImageBox>
-              <StyleduserImage src={data.boards[0].img} />
+              <StyleduserImage src={data?.boards[0]?.img} />
             </StyledUserImageBox>
             <StyledAddress>
               <div>
@@ -59,7 +58,7 @@ function Card({ data }) {
           </StyledCardItems>
           <StyledContent>
             <StyledImageBox onClick={() => navigate(`/Detail/${data.postId}`)}>
-              <StyledPostImage src={data.boards[0].img} />
+              <StyledPostImage src={data?.boards[0]?.img} />
             </StyledImageBox>
             <StyledBtnBox>
               <StyledButton
@@ -97,13 +96,13 @@ function Card({ data }) {
                 </span>
               </StyledButton>
             </StyledBtnBox>
-            {data.boards[0].comment?.length >= 80 ? (
+            {data?.boards[0]?.comment?.length >= 80 ? (
               <StyledCommentbox onClick={() => navigate(`/Detail/${data.postId}`)}>
-                {data.boards[0].comment.slice(0, 80) + '...'}
+                {data?.boards[0]?.comment?.slice(0, 80) + '...'}
               </StyledCommentbox>
             ) : (
               <StyledCommentbox onClick={() => navigate(`/Detail/${data.postId}`)}>
-                {data.boards[0].comment}
+                {data?.boards[0]?.comment}
               </StyledCommentbox>
             )}
           </StyledContent>
