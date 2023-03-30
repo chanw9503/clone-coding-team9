@@ -1,34 +1,77 @@
 import React from 'react';
 import Header from '../../components/Header';
-import styled from 'styled-components';
 import NavAside from '../../components/NavAside';
 import useGetDetailBoard from '../../hooks/useGetDetailBoard';
-import { COLOR } from '../../shared/color';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Comment from '../Comments/Comment';
+import { nanoid } from 'nanoid';
+import {
+  StyledTagListBlock,
+  StyledTagsBlock,
+  StyledVerLine,
+  StyledSubject,
+  StyledImage,
+  StyledContentBlock,
+  StyledMarginBlock,
+  StyledTagBox,
+  StyledContainer,
+  StyledWrap,
+} from './styles';
+import styled from 'styled-components';
+import { COLOR } from '../../shared/color';
+import useDeleteBoard from '../../hooks/useDeleteBoard';
+import { useDispatch } from 'react-redux';
 
 function Detail() {
   const { id } = useParams();
-  console.log(id);
-  const { data, isLoading } = useGetDetailBoard(id);
+  const { data } = useGetDetailBoard(id);
+  const navigate = useNavigate();
+  const mutation = useDeleteBoard();
+
+  const deleteBoardHandler = (e) => {
+    e.preventDefault();
+    mutation.mutate(id, {
+      onSuccess: () => {
+        navigate('/');
+      },
+    });
+  };
 
   return (
     <>
       <Header />
-      <NavAside />
+      <NavAside likesCount={data?.post.likesCount} />
       <StyledWrap>
         <StyledContainer>
           <StyledMarginBlock>
+            <StyledHeaderBlock>
+              <StyledSubject>
+                <div>{data?.post.style}</div>
+                <StyledVerLine />
+                <div>{data?.post.lifeType}</div>
+              </StyledSubject>
+              <StyledDeleteBlock>
+                <StyledDeleteButton onClick={deleteBoardHandler}>
+                  삭제하기
+                </StyledDeleteButton>
+              </StyledDeleteBlock>
+            </StyledHeaderBlock>
             {data?.post.boards.map((item) => {
               return (
-                <>
-                  <img src={item.img} />
+                <div key={nanoid() + 1}>
+                  <StyledImage src={item.img} />
                   <StyledContentBlock>{item.content}</StyledContentBlock>
-                </>
+                  <StyledTagListBlock>
+                    {item.tags?.split('#').map((item) => {
+                      if (item !== '')
+                        return <StyledTagsBlock key={nanoid()}>#{item}</StyledTagsBlock>;
+                    })}
+                  </StyledTagListBlock>
+                </div>
               );
             })}
           </StyledMarginBlock>
-          <Comment/>
+          <Comment />
         </StyledContainer>
       </StyledWrap>
     </>
@@ -37,33 +80,17 @@ function Detail() {
 
 export default Detail;
 
-const StyledContentBlock = styled.div`
-  color: rgb(47, 52, 56);
-  margin: 24px 0px;
+const StyledDeleteButton = styled.button`
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  background-color: ${COLOR.buttonBlue};
+  margin-left: 10px;
 `;
+const StyledDeleteBlock = styled.div``;
 
-const StyledMarginBlock = styled.div`
-  margin-top: 50px;
-  z-index: 100;
-`;
-
-const StyledTagBox = styled.div`
+const StyledHeaderBlock = styled.div`
   display: flex;
-  align-items: center;
-  gap: 20px;
-  margin: 0 0 16px;
-  font-size: 16px;
-
-  color: ${COLOR.tagBlue};
-`;
-
-const StyledContainer = styled.div`
-  box-sizing: border-box;
-  margin: 0 auto;
-  max-width: 720px;
-`;
-
-const StyledWrap = styled.div`
-  width: 100%;
-  flex: 1;
+  justify-content: space-between;
 `;
