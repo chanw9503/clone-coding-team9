@@ -81,8 +81,8 @@ function Comment() {
 
   //댓글 삭제
   const deleteComment = useDeleteComment(id);
-  const deleteCommentHandler = async (commentId) => {
-    await deleteComment.mutate(commentId);
+  const deleteCommentHandler = (commentId) => {
+    deleteComment.mutate(commentId);
     window.alert('댓글이 삭제되었습니다');
   };
 

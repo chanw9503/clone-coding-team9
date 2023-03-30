@@ -51,9 +51,11 @@ function Detail() {
                 <div>{data?.post.lifeType}</div>
               </StyledSubject>
               <StyledDeleteBlock>
-                <StyledDeleteButton onClick={deleteBoardHandler}>
-                  삭제하기
-                </StyledDeleteButton>
+                {data?.post.enable ? (
+                  <StyledDeleteButton onClick={deleteBoardHandler}>
+                    삭제하기
+                  </StyledDeleteButton>
+                ) : null}
               </StyledDeleteBlock>
             </StyledHeaderBlock>
             {data?.post.boards.map((item) => {
