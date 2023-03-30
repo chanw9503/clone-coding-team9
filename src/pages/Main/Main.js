@@ -27,6 +27,8 @@ function Main() {
 
   const { data, isLoading } = useGetMainBoard();
 
+  console.log(data);
+
   return (
     <>
       <Header />
@@ -37,7 +39,7 @@ function Main() {
             <DropBox {...dropboxProps2} />
           </StyledSortListBox>
           <StyledBody>
-            {data?.map((item) => {
+            {data?.posts.map((item) => {
               return <Card key={nanoid()} data={item} />;
             })}
           </StyledBody>

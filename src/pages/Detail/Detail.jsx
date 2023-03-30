@@ -11,7 +11,6 @@ function Detail() {
   console.log(id);
   const { data, isLoading } = useGetDetailBoard(id);
 
-  console.log(data);
   return (
     <>
       <Header />
@@ -19,16 +18,11 @@ function Detail() {
       <StyledWrap>
         <StyledContainer>
           <StyledMarginBlock>
-            {data?.boards?.map((item) => {
+            {data?.post.boards.map((item) => {
               return (
                 <>
                   <img src={item.img} />
                   <StyledContentBlock>{item.content}</StyledContentBlock>
-                  <StyledTagBox>
-                    {item.tags?.map((tag) => {
-                      return <div>{tag}</div>;
-                    })}
-                  </StyledTagBox>
                 </>
               );
             })}
