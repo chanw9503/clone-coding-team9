@@ -5,6 +5,7 @@ import NavAside from '../../components/NavAside';
 import useGetDetailBoard from '../../hooks/useGetDetailBoard';
 import { COLOR } from '../../shared/color';
 import { useParams } from 'react-router-dom';
+import Comment from '../Comments/Comment';
 
 function Detail() {
   const { id } = useParams();
@@ -33,6 +34,7 @@ function Detail() {
               );
             })}
           </StyledMarginBlock>
+          <Comment/>
         </StyledContainer>
       </StyledWrap>
     </>
