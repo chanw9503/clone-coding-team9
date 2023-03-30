@@ -10,7 +10,6 @@ export const onChangeEmail = (
   const emailCurrent = value;
   setHandler(emailCurrent);
 
-  console.log(emailCurrent);
   if (emailCurrent === '') {
     messageHandler('이메일은 필수 항목 입니다.');
     isHandler(false);

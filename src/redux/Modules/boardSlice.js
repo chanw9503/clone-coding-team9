@@ -8,6 +8,10 @@ const initialState = {
   ],
 
   contents: [],
+
+  mainUrl: '',
+
+  result: [],
 };
 
 const boardSlice = createSlice({
@@ -36,8 +40,23 @@ const boardSlice = createSlice({
       ];
       state.contents = [];
     },
+
+    addMainUrl: (state, action) => {
+      state.mainUrl = action.payload;
+    },
+
+    addDetailBoard: (state, action) => {
+      state.result = [...state.result, action.payload];
+    },
   },
 });
 
-export const { addBoards, initBoards, addContents, initState } = boardSlice.actions;
+export const {
+  addBoards,
+  initBoards,
+  addContents,
+  initState,
+  addMainUrl,
+  addDetailBoard,
+} = boardSlice.actions;
 export default boardSlice.reducer;
