@@ -67,8 +67,6 @@ function Posts() {
   const data = useSelector((state) => state.boards.boards);
   const contents = useSelector((state) => state.boards.contents);
 
-  console.log('data', data);
-
   useEffect(() => {
     boardsRef.current = contents;
   }, []);
@@ -149,6 +147,7 @@ function Posts() {
     navigate('/');
   };
 
+  console.log('data------', data);
   return (
     <StWrap>
       <StHeader>

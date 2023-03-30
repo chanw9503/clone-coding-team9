@@ -1,10 +1,15 @@
+import { nanoid } from 'nanoid';
 import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { useDispatch } from 'react-redux';
+import { addMainUrl } from '../../redux/Modules/boardSlice';
+import { DropUrl } from '../../shared/options';
 import { StyledLi, StyledSortButton, StyledUl, Title } from './styles';
 
 function DropBox(props) {
   const { title, list, isShow, close, open } = props;
 
+  const dispatch = useDispatch();
   const ref = useRef(null);
   const dropdownRef = useRef(null);
   const [btnPosition, setBtnPosition] = useState({ top: 0, left: 0, height: 0 });
@@ -40,6 +45,12 @@ function DropBox(props) {
     window.addEventListener('mouseover', mouseOverHandler);
   };
 
+  const onClickHanlder = (e) => {
+    const value = e.target.innerText;
+    const URL = DropUrl[value];
+    dispatch(addMainUrl(URL));
+  };
+
   return (
     <>
       <Title onMouseEnter={hoverHandler} ref={ref}>
@@ -50,7 +61,9 @@ function DropBox(props) {
           {createPortal(
             <StyledUl ref={dropdownRef} pos={btnPosition}>
               {list.map((item) => (
-                <StyledLi key={item.id}>{item.name}</StyledLi>
+                <StyledLi onClick={onClickHanlder} key={nanoid()}>
+                  {item.name}
+                </StyledLi>
               ))}
             </StyledUl>,
             document.body

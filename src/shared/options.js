@@ -22,4 +22,11 @@ const spaceOptions = [
   '가구&소품',
 ];
 
-export { sizeOptions, stlyeOptions, lifeTypeOptions, spaceOptions };
+const DropUrl = {
+  아파트: '아파트?title=likesCount',
+  원룸: '원룸?title=likesCount',
+  인기순: '?title=likeCount',
+  댓글순: '?title=commentCount',
+};
+
+export { sizeOptions, stlyeOptions, lifeTypeOptions, spaceOptions, DropUrl };

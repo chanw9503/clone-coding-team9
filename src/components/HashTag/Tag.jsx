@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { StDeleteBtn, StTagOut, StTagWrap, TagForm } from './Styles';
@@ -39,7 +40,7 @@ function Tag({ onChange, onKeyPress, value, boardsRef, index }) {
       <StTagOut>
         {hashtagList?.map((tag, index) => {
           return (
-            <div key={index}>
+            <div key={nanoid()}>
               <StDeleteBtn type="button" onClick={() => deleteTag(tag.hashtag)}>
                 {tag.hashtag}&nbsp;X
               </StDeleteBtn>

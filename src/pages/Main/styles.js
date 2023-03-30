@@ -38,6 +38,13 @@ const StyledContainer = styled.div`
   }
 `;
 
+const StyledBody = styled.div`
+  margin-top: 10px;
+  padding-bottom: 1000px;
+  display: flex;
+  flex-wrap: wrap;
+`;
+
 const StyledSortListBox = styled.div`
   padding: 10px 0;
   display: flex;
@@ -45,4 +52,4 @@ const StyledSortListBox = styled.div`
   gap: 5px;
 `;
 
-export { StyledWrap, StyledContainer, StyledSortListBox };
+export { StyledWrap, StyledContainer, StyledSortListBox, StyledBody };

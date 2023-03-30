@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid';
 import React, { useState } from 'react';
 import { StNavForm, StWrap, StItemBox, StNavItem } from './NaviStyles';
 
@@ -11,12 +12,11 @@ function Navi() {
         {category.map((item, index) => {
           if (+index === +count) {
             return (
-              <StItemBox borderColor={true}>
+              <StItemBox key={nanoid()} borderColor={true}>
                 <StNavItem
                   onClick={(e) => {
                     setCount(e.target.id);
                   }}
-                  key={index}
                   id={index}
                 >
                   {item}
@@ -26,10 +26,10 @@ function Navi() {
           } else {
             return (
               <StNavItem
+                key={nanoid()}
                 onClick={(e) => {
                   setCount(e.target.id);
                 }}
-                key={index}
                 id={index}
               >
                 {item}
