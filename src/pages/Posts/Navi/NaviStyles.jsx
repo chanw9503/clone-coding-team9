@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { COLOR } from '../../shared/color';
+import { COLOR } from '../../../shared/color';
 
 export const StWrap = styled.div`
   width: 100%;
