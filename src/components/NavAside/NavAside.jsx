@@ -1,16 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { COLOR } from '../../shared/color';
 import BookMark from '../BookMark/BookMark';
 import ChatIcon from '../ChatIcon/ChatIcon';
 import LikeIcon from '../LikeIcon/LikeIcon';
+import usePutLike from '../../hooks/usePutLike';
+import { useParams } from 'react-router-dom';
 
-function NavAside() {
+function NavAside(props) {
+  const [clickLike, setClickLike] = useState(false);
+  const [likesCount, setLikesCount] = useState('');
+
+  const mutation = usePutLike();
+  const { id } = useParams();
+
+  const ClickLikeHandler = () => {
+    mutation.mutate(id, {
+      onSuccess: (config) => {
+        console.log('config', config);
+        if (config.data.message === '게시글 좋아요를 취소하였습니다.') {
+          setLikesCount(config.data.likesCount);
+          setClickLike(false);
+        } else if (config.data.message === '게시글 좋아요를 등록하였습니다.') {
+          setLikesCount(config.data.likesCount);
+          setClickLike(true);
+        }
+      },
+    });
+  };
   return (
     <StyldWrap>
-      <StyledCircleBlock>
-        <LikeIcon />
-      </StyledCircleBlock>
-      <StyledCountBlock>123</StyledCountBlock>
+      {clickLike ? (
+        <StyledCircleBlock onClick={ClickLikeHandler}>
+          <LikeIcon fill={COLOR.blue} stroke={COLOR.blue} />
+        </StyledCircleBlock>
+      ) : (
+        <StyledCircleBlock onClick={ClickLikeHandler}>
+          <LikeIcon />
+        </StyledCircleBlock>
+      )}
+
+      <StyledCountBlock>{props.likesCount}</StyledCountBlock>
       <StyledCircleBlock>
         <BookMark />
       </StyledCircleBlock>
