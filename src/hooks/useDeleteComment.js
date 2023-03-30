@@ -3,10 +3,10 @@ import { keys } from '../utils/createQueryKey';
 import api from '../axios/api';
 import { getCookie } from '../auth/Cookie';
 
-const useDeleteComment= (postId, commentId) => {
+const useDeleteComment= (postId) => {
   const queryClient = useQueryClient();
   const deleteComment = useMutation({
-    mutationFn: async () => {
+    mutationFn: async (commentId) => {
       const data  = await api.delete(`/posts/${postId}/comments/${commentId}`,{
         headers : 
           {authorization: getCookie('token')}
@@ -14,7 +14,7 @@ const useDeleteComment= (postId, commentId) => {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(keys.POST_DELETE_COMMENT);
+      queryClient.invalidateQueries(keys.GET_COMMENT);
     },
   });
   return deleteComment;
