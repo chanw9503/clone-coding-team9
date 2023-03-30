@@ -144,8 +144,8 @@ export const StCommentId =styled.div`
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    font-size: 10px;
-    line-height: 14px;
+    font-size: 16px;
+    line-height: 20px;
     font-weight: 700;
     letter-spacing: -0.3px;
     box-sizing: border-box;
