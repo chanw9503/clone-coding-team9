@@ -19,8 +19,9 @@ import {
 } from './styles';
 import styled from 'styled-components';
 import { COLOR } from '../../shared/color';
-import useDeleteBoard from '../../hooks/useDeleteBoard';
+
 import { useDispatch } from 'react-redux';
+import useDeleteBoard from '../../hooks/useDeleteBoard';
 
 function Detail() {
   const { id } = useParams();
