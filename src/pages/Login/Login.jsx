@@ -46,6 +46,8 @@ function Login() {
       isError.current = false;
       queryClient.invalidateQueries('login');
       console.log('event', e);
+      alert(e.data.message);
+      navigate('/');
     },
     onError: () => {
       console.log('test');
