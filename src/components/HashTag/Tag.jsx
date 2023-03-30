@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addTags } from '../../redux/Modules/boardSlice';
 import { StDeleteBtn, StTagOut, StTagWrap, TagForm } from './Styles';
 
 function Tag({ onChange, onKeyPress, value, boardsRef, index }) {
