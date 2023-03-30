@@ -74,6 +74,8 @@ function SignUp() {
     nickName: true,
   });
 
+  const [emailValidate, setEmailValidate] = useState(false);
+
   const mutation = useSignUp();
   const EmailMutation = useGetEmailValidate();
 
@@ -114,6 +116,8 @@ function SignUp() {
       alert('닉네임을 다시 확인해 주세요.');
       nickNameRef.current.focus();
       setIsNickName(false);
+    } else if (emailValidate === false) {
+      alert('이메일 인증을 해주세요');
     } else {
       //회원가입 보내기
       const newUser = {
@@ -192,7 +196,17 @@ function SignUp() {
 
   const ClickEmailCodeHandler = (e) => {
     e.preventDefault();
-    EmailMutation.mutate(emailCode);
+    EmailMutation.mutate(emailCode, {
+      onSuccess: (config) => {
+        if (config.status === 200) {
+          setEmailValidate(true);
+          alert('인증 완료됬습니다!');
+        } else {
+          setEmailValidate(false);
+          alert('인증에 실패했습니다!');
+        }
+      },
+    });
   };
 
   return (
