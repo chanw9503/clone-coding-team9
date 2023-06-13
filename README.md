@@ -45,7 +45,9 @@
   * DropDown list를 통해 카테고리를 분류 할 수 있습니다. 
 
 
-## [Trouble Shooting] 
+
+
+## Trouble Shooting
 
 1. 회원가입 시 유효성 검사에 따른 UI 변화 
   * 유효성검사는 정규식을 활용해서 검사를 진행 했고, 입력할 값에 대한 결과값을 return 받아 확인했습니다.
